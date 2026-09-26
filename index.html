@@ -82,6 +82,7 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
 .form-group label{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
 .form-group input,.form-group select{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color .2s}
 .form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
+.form-group select:disabled{opacity:0.6;cursor:not-allowed;border-color:var(--border)}
 .form-group input:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
 .form-group select option{background:var(--navy3)}
 .form-group input.error,.form-group select.error{border-color:#e74c3c}
@@ -192,7 +193,8 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
         <select id="f_ro"><option value="">-- Select Zone First --</option></select>
         <span class="err-msg" id="e_ro"></span></div>
       <div class="form-group full"><label>TP Hub / DO *</label>
-        <select id="f_hub"><option value="">-- Select RO First --</option></select>
+        <select id="f_hub" style="display:block"><option value="">-- Select RO First --</option></select>
+        <input type="text" id="f_hub_text" placeholder="e.g. TP Hub Ahmedabad" style="display:none">
         <span class="err-msg" id="e_hub"></span></div>
       <div class="form-group"><label>Office Code *</label>
         <input type="text" id="f_code" placeholder="e.g. 60092">
@@ -344,31 +346,60 @@ function openModal(id) {
   editingId=id||null;
   document.getElementById('modalTitle').textContent=id?'Edit MACT Record':'Add New MACT';
   clearFormErrors();
+
+  const hubDrop = document.getElementById('f_hub');
+  const hubText = document.getElementById('f_hub_text');
+
   if(id) {
+    // EDIT MODE — show text inputs for the 4 editable fields
     const r=ALL_DATA.find(x=>x._id===id); if(!r)return;
+
+    // Zone & RO stay as dropdowns (not editable freely)
     document.getElementById('f_zone').value=r.ZONE;
+    document.getElementById('f_zone').disabled=true;
     const roSel=document.getElementById('f_ro');
-    roSel.innerHTML='<option value="">-- Select RO --</option>';
-    (ZONE_RO_MAP[r.ZONE]||[]).forEach(ro=>{const o=document.createElement('option');o.value=ro;o.textContent=ro;roSel.appendChild(o);});
-    roSel.value=r.RO;
-    const hubSel=document.getElementById('f_hub');
-    hubSel.innerHTML='<option value="">-- Select TP Hub --</option>';
-    (RO_HUB_MAP[r.RO]||[]).forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;hubSel.appendChild(o);});
-    hubSel.value=r.TP_HUB;
+    roSel.innerHTML='<option value="">'+r.RO+'</option>';
+    const roOpt=document.createElement('option'); roOpt.value=r.RO; roOpt.textContent=r.RO;
+    roSel.innerHTML=''; roSel.appendChild(roOpt); roSel.value=r.RO;
+    roSel.disabled=true;
+
+    // TP Hub — switch to text input
+    hubDrop.style.display='none';
+    hubText.style.display='block';
+    hubText.value=r.TP_HUB;
+
+    // Editable fields
     document.getElementById('f_code').value=r.OFFICE_CODE;
     document.getElementById('f_loc').value=r.LOCATION;
     document.getElementById('f_mact').value=r.MACT;
+
   } else {
+    // ADD MODE — all dropdowns, zone & RO enabled
     document.getElementById('f_zone').value='';
+    document.getElementById('f_zone').disabled=false;
     document.getElementById('f_ro').innerHTML='<option value="">-- Select Zone First --</option>';
-    document.getElementById('f_hub').innerHTML='<option value="">-- Select RO First --</option>';
+    document.getElementById('f_ro').disabled=false;
+
+    // TP Hub — switch back to dropdown
+    hubDrop.style.display='block';
+    hubDrop.innerHTML='<option value="">-- Select RO First --</option>';
+    hubText.style.display='none';
+    hubText.value='';
+
     document.getElementById('f_code').value='';
     document.getElementById('f_loc').value='';
     document.getElementById('f_mact').value='';
   }
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open');}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.getElementById('f_zone').disabled=false;
+  document.getElementById('f_ro').disabled=false;
+  document.getElementById('f_hub').style.display='block';
+  document.getElementById('f_hub_text').style.display='none';
+  clearFormErrors();
+}
 function clearFormErrors(){
   ['zone','ro','hub','code','loc','mact'].forEach(f=>{
     document.getElementById('f_'+f).classList.remove('error');
@@ -380,7 +411,9 @@ async function saveRecord() {
   clearFormErrors();
   const zone=document.getElementById('f_zone').value.trim();
   const ro=document.getElementById('f_ro').value.trim();
-  const hub=document.getElementById('f_hub').value.trim();
+  const hubText=document.getElementById('f_hub_text');
+  const hubDrop=document.getElementById('f_hub');
+  const hub=(hubText.style.display==='block' ? hubText.value : hubDrop.value).trim();
   const code=document.getElementById('f_code').value.trim();
   const loc=document.getElementById('f_loc').value.trim().toUpperCase();
   const mact=document.getElementById('f_mact').value.trim();
@@ -452,10 +485,12 @@ function applyFilters() {
     if(ro&&r.RO!==ro)return false;
     if(hub&&r.TP_HUB!==hub)return false;
     if(q){
-      // Exact match for Office Code, substring for rest
+      // Pure number → exact Office Code match only
       const isNumeric = /^\d+$/.test(q);
-      if(isNumeric && r.OFFICE_CODE && r.OFFICE_CODE.toString().trim() === q) return true;
-      if(isNumeric && r.OFFICE_CODE && r.OFFICE_CODE.toString().trim() === q) return true;
+      if(isNumeric) {
+        return String(r.OFFICE_CODE).trim() === q;
+      }
+      // Text → substring match on MACT, Location, TP Hub, RO
       const hay=[r.MACT,r.LOCATION,r.TP_HUB,r.RO].join(' ').toLowerCase();
       return hay.includes(q);
     }
