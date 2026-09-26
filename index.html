@@ -451,7 +451,14 @@ function applyFilters() {
     if(zone&&r.ZONE!==zone)return false;
     if(ro&&r.RO!==ro)return false;
     if(hub&&r.TP_HUB!==hub)return false;
-    if(q){const hay=[r.MACT,r.LOCATION,r.TP_HUB,r.RO,r.OFFICE_CODE].join(' ').toLowerCase();return hay.includes(q);}
+    if(q){
+      // Exact match for Office Code, substring for rest
+      const isNumeric = /^\d+$/.test(q);
+      if(isNumeric && r.OFFICE_CODE && r.OFFICE_CODE.toString().trim() === q) return true;
+      if(isNumeric && r.OFFICE_CODE && r.OFFICE_CODE.toString().trim() === q) return true;
+      const hay=[r.MACT,r.LOCATION,r.TP_HUB,r.RO].join(' ').toLowerCase();
+      return hay.includes(q);
+    }
     return true;
   });
   if(sortKey){filtered.sort((a,b)=>{const av=(a[sortKey]||'').toString().toLowerCase(),bv=(b[sortKey]||'').toString().toLowerCase();return av<bv?-sortDir:av>bv?sortDir:0;});}
