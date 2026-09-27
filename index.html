@@ -6,114 +6,171 @@
 <title>United India Insurance — MACT Finder</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Noto+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--navy:#0d1b2e;--navy2:#132035;--navy3:#1a2a45;--gold:#c9a84c;--gold2:#e8c96a;--gold3:#f5e09a;--white:#f0eeea;--muted:#8fa3b8;--border:#1e3050;--row-odd:#0f1e33;--row-even:#0d1b2e;--row-hover:#1a2f4a;--green:#27ae60;--red:#c0392b}
+:root{--navy:#0d1b2e;--navy2:#132035;--navy3:#1a2a45;--gold:#c9a84c;--gold2:#e8c96a;--gold3:#f5e09a;--white:#f0eeea;--muted:#8fa3b8;--border:#1e3050;--row-odd:#0f1e33;--row-even:#0d1b2e;--row-hover:#1a2f4a;--green:#27ae60;--red:#c0392b;--blue:#2980b9}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--navy);color:var(--white);font-family:'Noto Sans',sans-serif;min-height:100vh}
-.header{background:linear-gradient(135deg,#0a1520 0%,#132035 60%,#0a1520 100%);border-bottom:2px solid var(--gold);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 4px 24px rgba(0,0,0,.5)}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0a1520 0%,#132035 60%,#0a1520 100%);border-bottom:2px solid var(--gold);padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:64px;position:sticky;top:0;z-index:100;box-shadow:0 4px 24px rgba(0,0,0,.5)}
 .header-left{display:flex;align-items:center;gap:14px}
 .logo-emblem{width:40px;height:40px;border:2px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Rajdhani',sans-serif;font-weight:700;font-size:14px;color:var(--gold);background:rgba(201,168,76,.08)}
-.brand-title{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--white);letter-spacing:2px;text-transform:uppercase}
-.brand-subtitle{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-top:1px;font-weight:500}
-.header-right{display:flex;align-items:center;gap:10px}
-.header-badge{background:rgba(201,168,76,.12);border:1px solid var(--gold);color:var(--gold2);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;padding:6px 14px;border-radius:4px}
-.btn-add-header{background:var(--green);border:none;color:#fff;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:8px 16px;border-radius:4px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.btn-add-header:hover{background:#219a52}
-.sync-status{display:flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);transition:background .3s;flex-shrink:0}
+.brand-title{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--white);letter-spacing:2px;text-transform:uppercase}
+.brand-subtitle{font-size:10px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-top:1px}
+.header-right{display:flex;align-items:center;gap:8px}
+.header-badge{background:rgba(201,168,76,.12);border:1px solid var(--gold);color:var(--gold2);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;padding:6px 12px;border-radius:4px}
+.sync-status{display:flex;align-items:center;gap:6px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0}
 .sync-dot.live{background:var(--green);box-shadow:0 0 6px var(--green)}
 .sync-dot.syncing{background:var(--gold);animation:pulse 1s infinite}
 .sync-dot.error{background:var(--red)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.search-section{background:var(--navy2);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.search-box{position:relative;flex:1;min-width:240px}
-.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:15px;pointer-events:none}
-.search-input{width:100%;background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:14px;padding:10px 12px 10px 36px;outline:none;transition:border-color .2s,box-shadow .2s}
-.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
+.hbtn{border:none;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:7px 12px;border-radius:4px;cursor:pointer;text-transform:uppercase;transition:all .2s;white-space:nowrap}
+.hbtn-green{background:var(--green);color:#fff}.hbtn-green:hover{background:#219a52}
+.hbtn-blue{background:var(--blue);color:#fff}.hbtn-blue:hover{background:#2471a3}
+.hbtn-gold{background:rgba(201,168,76,.2);color:var(--gold2);border:1px solid var(--gold)}.hbtn-gold:hover{background:rgba(201,168,76,.35)}
+
+/* SEARCH */
+.search-section{background:var(--navy2);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search-box{position:relative;flex:1;min-width:200px}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:14px;pointer-events:none}
+.search-input{width:100%;background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:13px;padding:9px 10px 9px 32px;outline:none;transition:border-color .2s}
+.search-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
 .search-input::placeholder{color:var(--muted)}
-.filter-select{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:13px;padding:10px 30px 10px 12px;outline:none;cursor:pointer;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;min-width:150px}
+.filter-select{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:12px;padding:9px 28px 9px 10px;outline:none;cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;min-width:130px}
 .filter-select:focus{border-color:var(--gold)}
 .filter-select option{background:var(--navy3)}
-.btn-clear{background:transparent;border:1.5px solid var(--red);color:#e74c3c;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;padding:10px 16px;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:background .2s,color .2s;white-space:nowrap}
+.btn-clear{background:transparent;border:1.5px solid var(--red);color:#e74c3c;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;padding:9px 14px;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all .2s;white-space:nowrap}
 .btn-clear:hover{background:var(--red);color:#fff}
-.result-count{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;color:var(--gold);letter-spacing:1px;white-space:nowrap;padding:10px 0}
+.result-count{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:1px;white-space:nowrap}
+
+/* TABLE */
 .table-wrapper{overflow-x:auto;overflow-y:auto;max-height:calc(100vh - 200px)}
-table{width:100%;border-collapse:collapse;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:12px}
 thead{position:sticky;top:0;z-index:10}
-thead th{background:#091525;color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:14px 16px;text-align:left;border-bottom:2px solid var(--gold);white-space:nowrap;cursor:pointer;user-select:none;transition:background .15s}
+thead th{background:#091525;color:var(--gold);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:12px 14px;text-align:left;border-bottom:2px solid var(--gold);white-space:nowrap;cursor:pointer;user-select:none}
 thead th:hover{background:#0d1e35}
-thead th .sort-arrow{margin-left:4px;opacity:.4;font-size:10px}
-thead th.sorted .sort-arrow{opacity:1;color:var(--gold2)}
-thead th.no-sort{cursor:default}
-thead th.no-sort:hover{background:#091525}
-tbody tr{border-bottom:1px solid rgba(30,48,80,.6);transition:background .12s}
+thead th .sa{margin-left:4px;opacity:.4;font-size:9px}
+thead th.sorted .sa{opacity:1;color:var(--gold2)}
+thead th.no-sort{cursor:default}thead th.no-sort:hover{background:#091525}
+tbody tr{border-bottom:1px solid rgba(30,48,80,.5);transition:background .1s}
 tbody tr:nth-child(odd){background:var(--row-odd)}
 tbody tr:nth-child(even){background:var(--row-even)}
 tbody tr:hover{background:var(--row-hover)}
-tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:280px}
-.zone-badge{display:inline-block;padding:3px 10px;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
+.zone-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
 .zone-NORTH{background:rgba(41,128,185,.2);color:#5dade2;border:1px solid rgba(41,128,185,.4)}
 .zone-SOUTH{background:rgba(39,174,96,.2);color:#58d68d;border:1px solid rgba(39,174,96,.4)}
 .zone-EAST{background:rgba(243,156,18,.2);color:#f5b942;border:1px solid rgba(243,156,18,.4)}
 .zone-WEST{background:rgba(155,89,182,.2);color:#c39bd3;border:1px solid rgba(155,89,182,.4)}
-.code-cell{font-family:monospace;font-size:12px;color:var(--muted)}
+.code-cell{font-family:monospace;font-size:11px;color:var(--muted)}
 .mact-name{font-weight:500;color:#e8dcc8}
-.ro-tag{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;color:var(--gold3)}
+.ro-tag{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;color:var(--gold3)}
 .highlight{background:rgba(201,168,76,.28);border-radius:2px;padding:1px 2px}
 .new-row td{background:rgba(39,174,96,.06)!important;border-left:3px solid var(--green)}
-.btn-edit,.btn-del{border:none;border-radius:4px;font-size:11px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;padding:4px 10px;cursor:pointer;transition:background .2s;text-transform:uppercase}
+
+/* TP Hub cell with incharge tooltip */
+.hub-cell{position:relative;cursor:help}
+.hub-cell .hub-tip{display:none;position:absolute;left:0;top:100%;z-index:50;background:#0a1828;border:1px solid var(--gold);border-radius:6px;padding:10px 14px;min-width:220px;box-shadow:0 8px 24px rgba(0,0,0,.5);font-size:12px;white-space:nowrap}
+.hub-cell:hover .hub-tip{display:block}
+.hub-tip .tip-title{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:6px}
+.hub-tip .tip-row{display:flex;gap:8px;align-items:center;margin-bottom:3px;color:var(--white)}
+.hub-tip .tip-label{color:var(--muted);font-size:11px;min-width:70px}
+.hub-tip .tip-val{font-weight:500}
+.tip-none{color:var(--muted);font-style:italic;font-size:11px}
+
+/* ACTION BUTTONS */
+.btn-edit,.btn-del{border:none;border-radius:4px;font-size:10px;font-weight:600;font-family:'Rajdhani',sans-serif;letter-spacing:.5px;padding:3px 8px;cursor:pointer;transition:background .2s;text-transform:uppercase}
 .btn-edit{background:rgba(201,168,76,.15);color:var(--gold2);border:1px solid rgba(201,168,76,.3)}
 .btn-edit:hover{background:rgba(201,168,76,.3)}
-.btn-del{background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.3);margin-left:4px}
+.btn-del{background:rgba(192,57,43,.15);color:#e74c3c;border:1px solid rgba(192,57,43,.3);margin-left:3px}
 .btn-del:hover{background:rgba(192,57,43,.3)}
 .actions-cell{white-space:nowrap}
+
+/* LOADING */
 .loading-overlay{position:fixed;inset:0;background:rgba(9,21,37,.92);z-index:400;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
 .loading-overlay.hidden{display:none}
 .spinner{width:48px;height:48px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:600;color:var(--gold);letter-spacing:2px}
-.loading-sub{font-size:12px;color:var(--muted);letter-spacing:1px;text-align:center;max-width:320px;line-height:1.8}
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center}
+.loading-sub{font-size:12px;color:var(--muted);text-align:center;max-width:320px;line-height:1.8}
+
+/* MODAL BASE */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:200;align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal{background:var(--navy2);border:1px solid var(--gold);border-radius:10px;width:520px;max-width:95vw;padding:28px;box-shadow:0 20px 60px rgba(0,0,0,.6);max-height:90vh;overflow-y:auto}
-.modal h2{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;color:var(--gold2);letter-spacing:2px;text-transform:uppercase;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px}
+.modal{background:var(--navy2);border:1px solid var(--gold);border-radius:10px;width:520px;max-width:95vw;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.6);max-height:90vh;overflow-y:auto}
+.modal h2{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:var(--gold2);letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;border-bottom:1px solid var(--border);padding-bottom:10px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-group{display:flex;flex-direction:column;gap:5px}
 .form-group.full{grid-column:1/-1}
-.form-group label{font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
-.form-group input,.form-group select{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:13px;padding:9px 12px;outline:none;transition:border-color .2s}
-.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}
-.form-group select:disabled{opacity:0.6;cursor:not-allowed;border-color:var(--border)}
-.form-group input:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15)}
+.form-group label{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.form-group input,.form-group select{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:13px;padding:8px 10px;outline:none;transition:border-color .2s}
+.form-group select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c9a84c' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 8px center;padding-right:28px}
+.form-group select:disabled{opacity:.55;cursor:not-allowed}
+.form-group input:focus,.form-group select:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.12)}
 .form-group select option{background:var(--navy3)}
 .form-group input.error,.form-group select.error{border-color:#e74c3c}
-.err-msg{font-size:11px;color:#e74c3c;min-height:14px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px;padding-top:16px;border-top:1px solid var(--border)}
-.btn-save{background:var(--green);border:none;color:#fff;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:10px 24px;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:background .2s}
-.btn-save:hover{background:#219a52}
-.btn-save:disabled{opacity:.6;cursor:not-allowed}
-.btn-cancel{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;padding:10px 20px;border-radius:6px;cursor:pointer;text-transform:uppercase;transition:all .2s}
+.err-msg{font-size:10px;color:#e74c3c;min-height:13px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;padding-top:14px;border-top:1px solid var(--border)}
+.btn-save{background:var(--green);border:none;color:#fff;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:9px 20px;border-radius:6px;cursor:pointer;text-transform:uppercase}
+.btn-save:hover{background:#219a52}.btn-save:disabled{opacity:.6;cursor:not-allowed}
+.btn-cancel{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;padding:9px 16px;border-radius:6px;cursor:pointer;text-transform:uppercase}
 .btn-cancel:hover{border-color:var(--white);color:var(--white)}
+
+/* BULK UPDATE MODAL */
+.bulk-preview{background:var(--navy3);border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:10px;font-size:12px}
+.bulk-preview .prev-count{font-family:'Rajdhani',sans-serif;font-size:24px;font-weight:700;color:var(--gold2)}
+.bulk-preview .prev-label{color:var(--muted);font-size:11px;margin-top:2px}
+.bulk-samples{max-height:120px;overflow-y:auto;margin-top:8px}
+.bulk-sample-row{padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05);color:var(--muted);font-size:11px}
+.bulk-sample-row span{color:var(--white)}
+.field-btns{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.field-btn{background:var(--navy3);border:1.5px solid var(--border);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:11px;font-weight:600;padding:5px 10px;border-radius:4px;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.5px}
+.field-btn.active,.field-btn:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.1)}
+
+/* HUB MANAGER MODAL */
+.hub-modal{width:680px}
+.hub-list{max-height:340px;overflow-y:auto;margin-bottom:14px}
+.hub-list-row{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;align-items:center;padding:8px 10px;border-radius:6px;border-bottom:1px solid rgba(30,48,80,.5)}
+.hub-list-row:nth-child(odd){background:rgba(255,255,255,.02)}
+.hub-list-row.header{font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;padding:6px 10px;background:rgba(201,168,76,.06);border-radius:4px;margin-bottom:4px}
+.hub-name-cell{font-size:12px;color:var(--white);font-weight:500}
+.hub-field{font-size:12px;color:var(--muted)}
+.btn-hub-edit{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold2);font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;cursor:pointer;white-space:nowrap}
+.btn-hub-edit:hover{background:rgba(201,168,76,.3)}
+.hub-filter-input{background:var(--navy3);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-family:'Noto Sans',sans-serif;font-size:12px;padding:7px 10px;outline:none;width:100%;margin-bottom:10px}
+.hub-filter-input:focus{border-color:var(--gold)}
+.hub-edit-form{background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:10px}
+.hub-edit-form h4{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;color:var(--gold2);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase}
+
+/* CONFIRM */
 .confirm-box{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:250;display:none;align-items:center;justify-content:center}
 .confirm-box.open{display:flex}
-.confirm-inner{background:var(--navy2);border:1px solid var(--red);border-radius:10px;padding:28px;width:400px;max-width:92vw;text-align:center}
-.confirm-inner h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;color:#e74c3c;margin-bottom:10px}
-.confirm-inner p{font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.6}
-.confirm-btns{display:flex;gap:10px;justify-content:center}
-.btn-confirm-del{background:var(--red);border:none;color:#fff;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;padding:10px 24px;border-radius:6px;cursor:pointer}
+.confirm-inner{background:var(--navy2);border:1px solid var(--red);border-radius:10px;padding:26px;width:400px;max-width:92vw;text-align:center}
+.confirm-inner h3{font-family:'Rajdhani',sans-serif;font-size:17px;font-weight:700;color:#e74c3c;margin-bottom:8px}
+.confirm-inner p{font-size:12px;color:var(--muted);margin-bottom:18px;line-height:1.6}
+.confirm-btns{display:flex;gap:8px;justify-content:center}
+.btn-confirm-del{background:var(--red);border:none;color:#fff;font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:700;padding:9px 20px;border-radius:6px;cursor:pointer}
 .btn-confirm-del:disabled{opacity:.6;cursor:not-allowed}
-.btn-confirm-cancel{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;padding:10px 20px;border-radius:6px;cursor:pointer}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--navy2);border:1px solid var(--gold);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:600;letter-spacing:.5px;padding:12px 20px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:300;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none}
+.btn-confirm-cancel{background:transparent;border:1.5px solid var(--muted);color:var(--muted);font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;padding:9px 16px;border-radius:6px;cursor:pointer}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;right:20px;background:var(--navy2);border:1px solid var(--gold);color:var(--white);font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:.5px;padding:11px 18px;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:300;transform:translateY(20px);opacity:0;transition:all .3s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
 .toast.success{border-color:var(--green);color:#58d68d}
 .toast.error-t{border-color:var(--red);color:#e74c3c}
 .toast.warn{border-color:var(--gold);color:var(--gold2)}
-.empty-state{text-align:center;padding:80px 20px;color:var(--muted)}
-.empty-state .icon{font-size:48px;margin-bottom:16px}
-.empty-state h3{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:8px}
-.footer{background:#091525;border-top:1px solid var(--border);padding:10px 28px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state .icon{font-size:40px;margin-bottom:12px}
+.empty-state h3{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;color:var(--white);margin-bottom:6px}
+
+/* FOOTER */
+.footer{background:#091525;border-top:1px solid var(--border);padding:8px 20px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted)}
 .storage-info{display:flex;align-items:center;gap:6px}
 .storage-dot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0}
-::-webkit-scrollbar{width:6px;height:6px}
+
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--navy)}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
@@ -121,12 +178,14 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
 </head>
 <body>
 
+<!-- LOADING -->
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text">LOADING MACT DATA</div>
   <div class="loading-sub" id="loadingMsg">Connecting to Google Sheets...</div>
 </div>
 
+<!-- HEADER -->
 <div class="header">
   <div class="header-left">
     <div class="logo-emblem">UII</div>
@@ -137,11 +196,14 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
   </div>
   <div class="header-right">
     <div class="sync-status"><div class="sync-dot" id="syncDot"></div><span id="syncLabel">Connecting...</span></div>
-    <button class="btn-add-header" onclick="openModal()">+ Add MACT</button>
+    <button class="hbtn hbtn-gold" onclick="openBulkModal()">&#9654; Bulk Update</button>
+    <button class="hbtn hbtn-blue" onclick="openHubModal()">&#128100; TP Hub Incharge</button>
+    <button class="hbtn hbtn-green" onclick="openModal()">+ Add MACT</button>
     <div class="header-badge" id="total-badge">— Records</div>
   </div>
 </div>
 
+<!-- SEARCH -->
 <div class="search-section">
   <div class="search-box">
     <span class="search-icon">&#128269;</span>
@@ -149,28 +211,28 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
   </div>
   <select class="filter-select" id="zoneFilter">
     <option value="">All Zones</option>
-    <option value="NORTH">NORTH</option>
-    <option value="SOUTH">SOUTH</option>
-    <option value="EAST">EAST</option>
-    <option value="WEST">WEST</option>
+    <option value="NORTH">NORTH</option><option value="SOUTH">SOUTH</option>
+    <option value="EAST">EAST</option><option value="WEST">WEST</option>
   </select>
   <select class="filter-select" id="roFilter"><option value="">All ROs</option></select>
   <select class="filter-select" id="hubFilter"><option value="">All TP Hubs</option></select>
   <span class="result-count" id="resultCount">Loading...</span>
-  <button class="btn-clear" onclick="clearAll()">&#10005; Clear All</button>
+  <button class="btn-clear" onclick="clearAll()">&#10005; Clear</button>
 </div>
 
+<!-- TABLE -->
 <div class="table-wrapper">
   <table>
     <thead>
       <tr>
-        <th onclick="sortTable('ZONE')" id="th-ZONE">Zone <span class="sort-arrow">&#8597;</span></th>
-        <th onclick="sortTable('RO')" id="th-RO">RO <span class="sort-arrow">&#8597;</span></th>
-        <th onclick="sortTable('TP_HUB')" id="th-TP_HUB">TP Hub / DO <span class="sort-arrow">&#8597;</span></th>
-        <th onclick="sortTable('OFFICE_CODE')" id="th-OFFICE_CODE">Office Code <span class="sort-arrow">&#8597;</span></th>
-        <th onclick="sortTable('LOCATION')" id="th-LOCATION">Location <span class="sort-arrow">&#8597;</span></th>
-        <th onclick="sortTable('MACT')" id="th-MACT">MACT Court Name <span class="sort-arrow">&#8597;</span></th>
-        <th class="no-sort" style="width:120px">Actions</th>
+        <th onclick="sortTable('ZONE')" id="th-ZONE">Zone <span class="sa">&#8597;</span></th>
+        <th onclick="sortTable('RO')" id="th-RO">RO <span class="sa">&#8597;</span></th>
+        <th onclick="sortTable('TP_HUB')" id="th-TP_HUB">TP Hub / DO <span class="sa">&#8597;</span></th>
+        <th onclick="sortTable('OFFICE_CODE')" id="th-OFFICE_CODE">Office Code <span class="sa">&#8597;</span></th>
+        <th onclick="sortTable('LOCATION')" id="th-LOCATION">Location <span class="sa">&#8597;</span></th>
+        <th onclick="sortTable('MACT')" id="th-MACT">MACT Court Name <span class="sa">&#8597;</span></th>
+        <th class="no-sort">Incharge</th>
+        <th class="no-sort" style="width:110px">Actions</th>
       </tr>
     </thead>
     <tbody id="tableBody"></tbody>
@@ -182,6 +244,7 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
   <span id="footerCount"></span>
 </div>
 
+<!-- ADD/EDIT MACT MODAL -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2 id="modalTitle">Add New MACT</h2>
@@ -194,14 +257,12 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
         <span class="err-msg" id="e_ro"></span></div>
       <div class="form-group full"><label>TP Hub / DO *</label>
         <select id="f_hub" style="display:block"><option value="">-- Select RO First --</option></select>
-        <input type="text" id="f_hub_text" placeholder="e.g. TP Hub Ahmedabad" style="display:none">
+        <input type="text" id="f_hub_text" placeholder="Type TP Hub name" style="display:none">
         <span class="err-msg" id="e_hub"></span></div>
       <div class="form-group"><label>Office Code *</label>
-        <input type="text" id="f_code" placeholder="e.g. 60092">
-        <span class="err-msg" id="e_code"></span></div>
+        <input type="text" id="f_code" placeholder="e.g. 60092"><span class="err-msg" id="e_code"></span></div>
       <div class="form-group"><label>Location *</label>
-        <input type="text" id="f_loc" placeholder="e.g. Ahmedabad">
-        <span class="err-msg" id="e_loc"></span></div>
+        <input type="text" id="f_loc" placeholder="e.g. Ahmedabad"><span class="err-msg" id="e_loc"></span></div>
       <div class="form-group full"><label>MACT Court Name *</label>
         <input type="text" id="f_mact" placeholder="e.g. Principal District Judge, Ahmedabad">
         <span class="err-msg" id="e_mact"></span></div>
@@ -213,6 +274,80 @@ tbody td{padding:11px 16px;color:var(--white);vertical-align:middle;max-width:28
   </div>
 </div>
 
+<!-- BULK UPDATE MODAL -->
+<div class="modal-overlay" id="bulkOverlay">
+  <div class="modal" style="width:560px">
+    <h2>&#9654; Bulk Find &amp; Replace</h2>
+    <div class="form-group" style="margin-bottom:10px">
+      <label>Select Field to Update</label>
+      <div class="field-btns" id="fieldBtns">
+        <button class="field-btn active" data-field="TP_HUB" onclick="selectBulkField(this)">TP Hub / DO</button>
+        <button class="field-btn" data-field="LOCATION" onclick="selectBulkField(this)">Location</button>
+        <button class="field-btn" data-field="MACT" onclick="selectBulkField(this)">MACT Name</button>
+        <button class="field-btn" data-field="OFFICE_CODE" onclick="selectBulkField(this)">Office Code</button>
+        <button class="field-btn" data-field="RO" onclick="selectBulkField(this)">RO Code</button>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Find (exact match) *</label>
+        <input type="text" id="bulk_find" placeholder="Current value..." oninput="previewBulk()">
+        <span class="err-msg" id="e_bulk_find"></span></div>
+      <div class="form-group"><label>Replace With *</label>
+        <input type="text" id="bulk_replace" placeholder="New value...">
+        <span class="err-msg" id="e_bulk_replace"></span></div>
+    </div>
+    <div class="bulk-preview" id="bulkPreview" style="display:none">
+      <div style="display:flex;align-items:baseline;gap:10px">
+        <div class="prev-count" id="prevCount">0</div>
+        <div>
+          <div style="font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--white);font-size:14px">records will be updated</div>
+          <div class="prev-label" id="prevField"></div>
+        </div>
+      </div>
+      <div class="bulk-samples" id="bulkSamples"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeBulkModal()">Cancel</button>
+      <button class="btn-save" id="btnBulkApply" onclick="applyBulk()" style="background:var(--blue)" disabled>Apply to All</button>
+    </div>
+  </div>
+</div>
+
+<!-- HUB INCHARGE MODAL -->
+<div class="modal-overlay" id="hubOverlay">
+  <div class="modal hub-modal">
+    <h2>&#128100; TP Hub Incharge Manager</h2>
+    <input type="text" class="hub-filter-input" id="hubFilterInput" placeholder="&#128269; Filter TP Hubs..." oninput="renderHubList()">
+    <div class="hub-list-row header">
+      <div>TP Hub / DO</div><div>Incharge</div><div>Contact No.</div><div></div>
+    </div>
+    <div class="hub-list" id="hubList">
+      <div style="text-align:center;padding:20px;color:var(--muted)">Loading hub data...</div>
+    </div>
+    <div class="hub-edit-form" id="hubEditForm" style="display:none">
+      <h4 id="hubEditTitle">Edit Incharge</h4>
+      <div class="form-grid">
+        <div class="form-group full"><label>TP Hub Name</label>
+          <input type="text" id="he_hub" readonly style="opacity:.6;cursor:not-allowed"></div>
+        <div class="form-group"><label>Incharge Name</label>
+          <input type="text" id="he_incharge" placeholder="e.g. Rahul Sharma"></div>
+        <div class="form-group"><label>Contact No.</label>
+          <input type="text" id="he_contact" placeholder="e.g. 9876543210"></div>
+        <div class="form-group full"><label>Email (optional)</label>
+          <input type="text" id="he_email" placeholder="e.g. rahul@uiic.co.in"></div>
+      </div>
+      <div class="modal-actions" style="margin-top:12px;padding-top:10px">
+        <button class="btn-cancel" onclick="cancelHubEdit()">Cancel</button>
+        <button class="btn-save" id="btnSaveHub" onclick="saveHubIncharge()">Save Incharge</button>
+      </div>
+    </div>
+    <div class="modal-actions" style="border-top:none;margin-top:0">
+      <button class="btn-cancel" onclick="closeHubModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE CONFIRM -->
 <div class="confirm-box" id="confirmBox">
   <div class="confirm-inner">
     <h3>Delete MACT Record?</h3>
@@ -233,103 +368,87 @@ const ZONE_RO_MAP  = {"WEST": ["AHME", "BHOP", "MRO-2", "NAGP", "PUNE", "RAIP", 
 const ZONE_HUB_MAP = {"WEST": ["D.O. Alibaug", "D.O. Margao", "D.O. Panjim", "DO, AKOLA", "NASHIK TP HUB ", "T. P. Hub M.R.O. II", "TP CELL ,RAIPUR", "TP CELL RAIPUR", "TP HUB BHOPAL", "TP HUB BILASPUR", "TP HUB GWALIOR", "TP HUB INDORE", "TP HUB JABALPUR", "TP HUB KOLHAPUR", "TP HUB KOLHAPUR ", "TP HUB NANDED", "TP HUB PUNE", "TP HUB SATNA", "TP HUB SOLAPUR", "TP HUB, BHOPAL", "TP Hub\n AURANGABAD", "TP Hub Ahmedabad", "TP Hub Godhra", "TP Hub Mehsana", "TP Hub NAGPUR", "TP Hub Rajkot", "TP Hub Vadodara"], "SOUTH": ["DO\n MUVATTUPUZHA", "DO ALAPPUZHA", "DO DINDIGUL", "DO KOTTAYAM", "DO MANGALORE", "DO PATHANAMTHITTA", "DO,KOLAR", "Motor TP Claims\n Hub, Chennai", "Motor TP Claims\n Hub, Tiruvallur", "TP\n HUB,PUDUCHERR Y", "TP HUB\n ERNAKULAM", "TP HUB\n HYDERABAD", "TP HUB - TIRUNELVELI", "TP HUB BELGAUM", "TP HUB CHENNAI", "TP HUB ERODE", "TP HUB GULBARGA", "TP HUB HUBLI", "TP HUB HYDERABAD", "TP HUB Hosur", "TP HUB KOZHIKODE", "TP HUB MADURAI", "TP HUB NAGERCOIL", "TP HUB NELLORE", "TP HUB SALEM", "TP HUB SHIMOGA", "TP HUB THANJAVUR", "TP HUB THRISSUR", "TP HUB TRIVANDRUM", "TP HUB VIJAYAWADA", "TP HUB VISAKHAPATNAM", "TP HUB, BENGALURU", "TP HUB, HUBLI", "TP HUB, SHIMOGA", "TP HUB,MYSORE", "TP HUB,PUDUCHERR\n Y", "TP HUB,PUDUCHERRY\n ", "TP HUB,TUMKUR", "TP HUB,VELLORE", "TP HUB- TRICHY", "TP Hub Kadapa", "TP Hub, Coimbatore", "TP Hub, Erode", "TP Hub, Hosur", "TP Hub, Karimnagar", "TP Hub, Salem", "TP Hub, Tirupur"], "EAST": ["BO AIZAWL", "BO DIMAPUR", "BO IMPHAL", "DO AGARTALA", "DO BALASORE", "DO BERHAMPUR", "DO JORHAT", "DO SAMBALPUR", "DO TINSUKIA", "SHILLONG DO", "SILCHAR D.O.", "TP HUB\n GUWAHATI", "TP HUB BHAGALPUR", "TP HUB BONGAIGAON", "TP HUB CUTTACK", "TP HUB Durgapur", "TP HUB GUWAHATI", "TP HUB Kolkata", "TP HUB PATNA", "TP HUB RANCHI", "TP HUB Siliguri", "Tezpur DO"], "NORTH": ["DO 2 KOTA", "DO AGRA", "DO ALIGARH", "DO ALLAHABAD", "DO BAREILLY", "DO FAIZABAD", "DO GORAKHPUR", "DO KOTA", "DO MATHURA", "DO SHAHJANPUR", "DO-1,VARANASI", "DO-II,VARANASI", "DRO - 1, DELHI", "TP HUB ALWAR", "TP HUB DEHRADUN", "TP HUB DRO-2", "TP HUB HISAR", "TP HUB JAIPUR", "TP HUB JAMMU", "TP HUB JODHPUR", "TP HUB KANPUR", "TP HUB LUCKNOW", "TP HUB LUDHIANA", "TP HUB MEERUT", "TP HUB PATIALA", "TP HUB SHIMLA", "TP HUB SRIGANGANAGAR", "TP HUB SRINAGAR", "TP HUB UDAIPUR", "TP Hub, Chandigarh"]};
 const RO_HUB_MAP   = {"AHME": ["TP Hub Ahmedabad", "TP Hub Mehsana", "TP Hub Rajkot"], "BANG": ["DO MANGALORE", "DO,KOLAR", "TP HUB, BENGALURU", "TP HUB,MYSORE", "TP HUB,TUMKUR"], "BHOP": ["TP HUB BHOPAL", "TP HUB GWALIOR", "TP HUB INDORE", "TP HUB JABALPUR", "TP HUB SATNA", "TP HUB, BHOPAL"], "BHUB": ["DO BALASORE", "DO BERHAMPUR", "DO SAMBALPUR", "TP HUB CUTTACK"], "CHAN": ["TP HUB HISAR", "TP HUB JAMMU", "TP HUB SHIMLA", "TP HUB SRINAGAR", "TP Hub, Chandigarh"], "CHEN": ["Motor TP Claims\n Hub, Chennai", "Motor TP Claims\n Hub, Tiruvallur", "TP HUB CHENNAI"], "COIM": ["TP HUB ERODE", "TP HUB Hosur", "TP HUB SALEM", "TP Hub, Coimbatore", "TP Hub, Erode", "TP Hub, Hosur", "TP Hub, Salem", "TP Hub, Tirupur"], "DEHR": ["TP HUB DEHRADUN", "TP HUB MEERUT"], "DRO-1": ["DRO - 1, DELHI"], "DRO-2": ["TP HUB DRO-2"], "GUWA": ["BO AIZAWL", "BO DIMAPUR", "BO IMPHAL", "DO AGARTALA", "DO JORHAT", "DO TINSUKIA", "SHILLONG DO", "SILCHAR D.O.", "TP HUB\n GUWAHATI", "TP HUB BONGAIGAON", "TP HUB GUWAHATI", "Tezpur DO"], "HUBL": ["TP HUB BELGAUM", "TP HUB GULBARGA", "TP HUB HUBLI", "TP HUB SHIMOGA", "TP HUB, HUBLI", "TP HUB, SHIMOGA"], "HYDE": ["TP HUB\n HYDERABAD", "TP HUB HYDERABAD", "TP Hub Kadapa", "TP Hub, Karimnagar"], "JAIP": ["DO 2 KOTA", "DO KOTA", "TP HUB ALWAR", "TP HUB JAIPUR"], "JODH": ["TP HUB JODHPUR", "TP HUB SRIGANGANAGAR", "TP HUB UDAIPUR"], "KOCH": ["DO\n MUVATTUPUZHA", "DO ALAPPUZHA", "DO KOTTAYAM", "DO PATHANAMTHITTA", "TP HUB\n ERNAKULAM", "TP HUB TRIVANDRUM"], "KOLK": ["TP HUB Durgapur", "TP HUB Kolkata", "TP HUB Siliguri"], "KOZH": ["TP HUB KOZHIKODE", "TP HUB THRISSUR"], "LUCK": ["DO AGRA", "DO ALIGARH", "DO ALLAHABAD", "DO BAREILLY", "DO FAIZABAD", "DO GORAKHPUR", "DO MATHURA", "DO SHAHJANPUR", "DO-1,VARANASI", "DO-II,VARANASI", "TP HUB KANPUR", "TP HUB LUCKNOW"], "LUDH": ["TP HUB LUDHIANA", "TP HUB PATIALA"], "MADU": ["DO DINDIGUL", "TP HUB - TIRUNELVELI", "TP HUB MADURAI", "TP HUB NAGERCOIL", "TP HUB THANJAVUR", "TP HUB- TRICHY"], "MRO-2": ["D.O. Alibaug", "D.O. Margao", "D.O. Panjim", "T. P. Hub M.R.O. II"], "NAGP": ["DO, AKOLA", "TP HUB NANDED", "TP Hub\n AURANGABAD", "TP Hub NAGPUR"], "PATN": ["TP HUB BHAGALPUR", "TP HUB PATNA", "TP HUB RANCHI"], "PUDU": ["TP\n HUB,PUDUCHERR Y", "TP HUB,PUDUCHERR\n Y", "TP HUB,PUDUCHERRY\n ", "TP HUB,VELLORE"], "PUNE": ["NASHIK TP HUB ", "TP HUB KOLHAPUR", "TP HUB KOLHAPUR ", "TP HUB PUNE", "TP HUB SOLAPUR"], "RAIP": ["TP CELL ,RAIPUR", "TP CELL RAIPUR", "TP HUB BILASPUR"], "VADO": ["TP Hub Godhra", "TP Hub Vadodara"], "VISA": ["TP HUB NELLORE", "TP HUB VIJAYAWADA", "TP HUB VISAKHAPATNAM"]};
 
-let ALL_DATA=[], filtered=[], sortKey='', sortDir=1, editingId=null, deleteId=null;
+let ALL_DATA=[], filtered=[], HUB_DATA={}, sortKey='', sortDir=1;
+let editingId=null, deleteId=null, bulkField='TP_HUB';
 
-// ── JSONP — only way to avoid CORS with Apps Script ──────
-function jsonpCall(params) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const qs = Object.entries(params)
-      .map(([k,v]) => k + '=' + encodeURIComponent(typeof v === 'object' ? JSON.stringify(v) : String(v)))
-      .join('&');
-    const url = SCRIPT_URL + '?' + qs + '&callback=' + cbName + '&t=' + Date.now();
-
-    const timer = setTimeout(() => {
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-      reject(new Error('Timeout — could not reach Google Sheets'));
-    }, 15000);
-
-    window[cbName] = function(data) {
-      clearTimeout(timer);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-      if (data && data.success === false) reject(new Error(data.error || 'Server error'));
-      else resolve(data);
-    };
-
-    const script = document.createElement('script');
-    script.src = url;
-    script.onerror = () => {
-      clearTimeout(timer);
-      delete window[cbName];
-      reject(new Error('Network error — could not reach Google Sheets'));
-    };
-    document.head.appendChild(script);
+// ── JSONP ──────────────────────────────────────────────────────
+function jsonpCall(params, timeout=20000) {
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(typeof v==='object'?JSON.stringify(v):String(v))).join('&');
+    const url=SCRIPT_URL+'?'+qs+'&callback='+cb+'&t='+Date.now();
+    const timer=setTimeout(()=>{delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);reject(new Error('Timeout'));'},timeout);
+    window[cb]=d=>{clearTimeout(timer);delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);d&&d.success===false?reject(new Error(d.error||'Error')):resolve(d);};
+    const s=document.createElement('script');
+    s.src=url;
+    s.onerror=()=>{clearTimeout(timer);delete window[cb];reject(new Error('Network error'));};
+    document.head.appendChild(s);
   });
 }
 
-function setSync(state, label) {
-  document.getElementById('syncDot').className = 'sync-dot ' + state;
-  document.getElementById('syncLabel').textContent = label;
-}
+function setSync(state,label){document.getElementById('syncDot').className='sync-dot '+state;document.getElementById('syncLabel').textContent=label;}
 
-async function init() {
+// ── INIT ──────────────────────────────────────────────────────
+async function init(){
   setSync('syncing','Connecting...');
-  try {
-    const res = await jsonpCall({action:'fetch'});
-    if (!res.data || res.data.length === 0) {
-      document.getElementById('loadingMsg').textContent = 'First time: uploading ' + BASE_DATA.length + ' records to Google Sheets...';
-      for (let i = 0; i < BASE_DATA.length; i++) {
-        if (i % 50 === 0) document.getElementById('loadingMsg').textContent = 'Uploading... ' + i + ' / ' + BASE_DATA.length;
-        await jsonpCall({action:'add', record: BASE_DATA[i]});
+  try{
+    const [mactRes, hubRes] = await Promise.all([jsonpCall({action:'fetch'}), jsonpCall({action:'fetchHubs'})]);
+    if(!mactRes.data||mactRes.data.length===0){
+      document.getElementById('loadingMsg').textContent='First time: uploading '+BASE_DATA.length+' records...';
+      for(let i=0;i<BASE_DATA.length;i++){
+        if(i%100===0)document.getElementById('loadingMsg').textContent='Uploading... '+i+' / '+BASE_DATA.length;
+        await jsonpCall({action:'add',record:BASE_DATA[i]});
       }
-      const res2 = await jsonpCall({action:'fetch'});
-      ALL_DATA = (res2.data||[]).filter(r => r._deleted !== 'true');
-    } else {
-      ALL_DATA = res.data.filter(r => r._deleted !== 'true');
+      const r2=await jsonpCall({action:'fetch'});
+      ALL_DATA=(r2.data||[]).filter(r=>r._deleted!=='true');
+    }else{
+      ALL_DATA=mactRes.data.filter(r=>r._deleted!=='true');
     }
+    // Build hub lookup
+    (hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     setSync('live','Live • Google Sheets');
     document.getElementById('loadingOverlay').classList.add('hidden');
-    rebuildRODropdown(); rebuildHubDropdown(); applyFilters();
-  } catch(err) {
-    console.error(err);
-    ALL_DATA = [...BASE_DATA];
-    setSync('error','Offline • Local data');
-    document.getElementById('loadingMsg').textContent = err.message + '\n\nShowing local data. Changes will NOT be saved.';
-    setTimeout(()=>document.getElementById('loadingOverlay').classList.add('hidden'), 3500);
-    rebuildRODropdown(); rebuildHubDropdown(); applyFilters();
+    rebuildRODropdown();rebuildHubDropdown();applyFilters();
+  }catch(err){
+    ALL_DATA=[...BASE_DATA];
+    setSync('error','Offline');
+    document.getElementById('loadingMsg').textContent=err.message+'\n\nShowing local data.';
+    setTimeout(()=>document.getElementById('loadingOverlay').classList.add('hidden'),3000);
+    rebuildRODropdown();rebuildHubDropdown();applyFilters();
     showToast('Offline — local data only','warn');
   }
 }
 
-async function refreshData() {
+async function refreshData(){
   setSync('syncing','Syncing...');
-  try {
-    const res = await jsonpCall({action:'fetch'});
-    ALL_DATA = (res.data||[]).filter(r => r._deleted !== 'true');
+  try{
+    const [mactRes,hubRes]=await Promise.all([jsonpCall({action:'fetch'}),jsonpCall({action:'fetchHubs'})]);
+    ALL_DATA=(mactRes.data||[]).filter(r=>r._deleted!=='true');
+    HUB_DATA={};(hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     setSync('live','Live • Google Sheets');
-    rebuildRODropdown(); rebuildHubDropdown(); applyFilters();
-  } catch(err) { setSync('error','Sync failed'); }
+    rebuildRODropdown();rebuildHubDropdown();applyFilters();
+  }catch(err){setSync('error','Sync failed');}
 }
 
-function rebuildRODropdown() {
+// ── CASCADING DROPDOWNS ───────────────────────────────────────
+function rebuildRODropdown(){
   const zone=document.getElementById('zoneFilter').value;
-  const roSel=document.getElementById('roFilter'), prev=roSel.value;
+  const roSel=document.getElementById('roFilter'),prev=roSel.value;
   roSel.innerHTML='<option value="">All ROs</option>';
   const ros=zone?ZONE_RO_MAP[zone]||[]:[...new Set(ALL_DATA.map(r=>r.RO))].sort();
   ros.forEach(ro=>{const o=document.createElement('option');o.value=ro;o.textContent=ro;roSel.appendChild(o);});
   if(prev&&ros.includes(prev))roSel.value=prev;
 }
-function rebuildHubDropdown() {
-  const zone=document.getElementById('zoneFilter').value, ro=document.getElementById('roFilter').value;
-  const hubSel=document.getElementById('hubFilter'), prev=hubSel.value;
+function rebuildHubDropdown(){
+  const zone=document.getElementById('zoneFilter').value,ro=document.getElementById('roFilter').value;
+  const hubSel=document.getElementById('hubFilter'),prev=hubSel.value;
   hubSel.innerHTML='<option value="">All TP Hubs</option>';
   let hubs=ro?RO_HUB_MAP[ro]||[]:zone?ZONE_HUB_MAP[zone]||[]:[...new Set(ALL_DATA.map(r=>r.TP_HUB))].sort();
   hubs.forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;hubSel.appendChild(o);});
   if(prev&&hubs.includes(prev))hubSel.value=prev;
 }
 
+// ── MODAL form cascading ──────────────────────────────────────
 document.getElementById('f_zone').addEventListener('change',()=>{
   const roSel=document.getElementById('f_ro');
   roSel.innerHTML='<option value="">-- Select RO --</option>';
@@ -342,208 +461,271 @@ document.getElementById('f_ro').addEventListener('change',()=>{
   (RO_HUB_MAP[document.getElementById('f_ro').value]||[]).forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;hubSel.appendChild(o);});
 });
 
-function openModal(id) {
+// ── OPEN/CLOSE MACT MODAL ────────────────────────────────────
+function openModal(id){
   editingId=id||null;
   document.getElementById('modalTitle').textContent=id?'Edit MACT Record':'Add New MACT';
   clearFormErrors();
-
-  const hubDrop = document.getElementById('f_hub');
-  const hubText = document.getElementById('f_hub_text');
-
-  if(id) {
-    // EDIT MODE — show text inputs for the 4 editable fields
-    const r=ALL_DATA.find(x=>x._id===id); if(!r)return;
-
-    // Zone & RO stay as dropdowns (not editable freely)
-    document.getElementById('f_zone').value=r.ZONE;
-    document.getElementById('f_zone').disabled=true;
+  const hubDrop=document.getElementById('f_hub'),hubText=document.getElementById('f_hub_text');
+  if(id){
+    const r=ALL_DATA.find(x=>x._id===id);if(!r)return;
+    document.getElementById('f_zone').value=r.ZONE;document.getElementById('f_zone').disabled=true;
     const roSel=document.getElementById('f_ro');
-    roSel.innerHTML='<option value="">'+r.RO+'</option>';
-    const roOpt=document.createElement('option'); roOpt.value=r.RO; roOpt.textContent=r.RO;
-    roSel.innerHTML=''; roSel.appendChild(roOpt); roSel.value=r.RO;
-    roSel.disabled=true;
-
-    // TP Hub — switch to text input
-    hubDrop.style.display='none';
-    hubText.style.display='block';
-    hubText.value=r.TP_HUB;
-
-    // Editable fields
+    roSel.innerHTML='';const ro=document.createElement('option');ro.value=r.RO;ro.textContent=r.RO;roSel.appendChild(ro);roSel.value=r.RO;roSel.disabled=true;
+    hubDrop.style.display='none';hubText.style.display='block';hubText.value=r.TP_HUB;
     document.getElementById('f_code').value=r.OFFICE_CODE;
     document.getElementById('f_loc').value=r.LOCATION;
     document.getElementById('f_mact').value=r.MACT;
-
-  } else {
-    // ADD MODE — all dropdowns, zone & RO enabled
-    document.getElementById('f_zone').value='';
-    document.getElementById('f_zone').disabled=false;
-    document.getElementById('f_ro').innerHTML='<option value="">-- Select Zone First --</option>';
-    document.getElementById('f_ro').disabled=false;
-
-    // TP Hub — switch back to dropdown
-    hubDrop.style.display='block';
-    hubDrop.innerHTML='<option value="">-- Select RO First --</option>';
-    hubText.style.display='none';
-    hubText.value='';
-
-    document.getElementById('f_code').value='';
-    document.getElementById('f_loc').value='';
-    document.getElementById('f_mact').value='';
+  }else{
+    document.getElementById('f_zone').value='';document.getElementById('f_zone').disabled=false;
+    document.getElementById('f_ro').innerHTML='<option value="">-- Select Zone First --</option>';document.getElementById('f_ro').disabled=false;
+    hubDrop.style.display='block';hubDrop.innerHTML='<option value="">-- Select RO First --</option>';
+    hubText.style.display='none';hubText.value='';
+    document.getElementById('f_code').value='';document.getElementById('f_loc').value='';document.getElementById('f_mact').value='';
   }
   document.getElementById('modalOverlay').classList.add('open');
 }
 function closeModal(){
   document.getElementById('modalOverlay').classList.remove('open');
-  document.getElementById('f_zone').disabled=false;
-  document.getElementById('f_ro').disabled=false;
-  document.getElementById('f_hub').style.display='block';
-  document.getElementById('f_hub_text').style.display='none';
+  document.getElementById('f_zone').disabled=false;document.getElementById('f_ro').disabled=false;
+  document.getElementById('f_hub').style.display='block';document.getElementById('f_hub_text').style.display='none';
   clearFormErrors();
 }
-function clearFormErrors(){
-  ['zone','ro','hub','code','loc','mact'].forEach(f=>{
-    document.getElementById('f_'+f).classList.remove('error');
-    document.getElementById('e_'+f).textContent='';
-  });
-}
+function clearFormErrors(){['zone','ro','hub','code','loc','mact'].forEach(f=>{document.getElementById('f_'+f).classList&&document.getElementById('f_'+f).classList.remove('error');const e=document.getElementById('e_'+f);if(e)e.textContent='';'});}
 
-async function saveRecord() {
+async function saveRecord(){
   clearFormErrors();
   const zone=document.getElementById('f_zone').value.trim();
   const ro=document.getElementById('f_ro').value.trim();
   const hubText=document.getElementById('f_hub_text');
   const hubDrop=document.getElementById('f_hub');
-  const hub=(hubText.style.display==='block' ? hubText.value : hubDrop.value).trim();
+  const hub=(hubText.style.display==='block'?hubText.value:hubDrop.value).trim();
   const code=document.getElementById('f_code').value.trim();
   const loc=document.getElementById('f_loc').value.trim().toUpperCase();
   const mact=document.getElementById('f_mact').value.trim();
   let valid=true;
   if(!zone){document.getElementById('f_zone').classList.add('error');document.getElementById('e_zone').textContent='Required';valid=false;}
   if(!ro){document.getElementById('f_ro').classList.add('error');document.getElementById('e_ro').textContent='Required';valid=false;}
-  if(!hub){document.getElementById('f_hub').classList.add('error');document.getElementById('e_hub').textContent='Required';valid=false;}
+  if(!hub){(hubText.style.display==='block'?hubText:hubDrop).classList.add('error');document.getElementById('e_hub').textContent='Required';valid=false;}
   if(!code){document.getElementById('f_code').classList.add('error');document.getElementById('e_code').textContent='Required';valid=false;}
   if(!loc){document.getElementById('f_loc').classList.add('error');document.getElementById('e_loc').textContent='Required';valid=false;}
   if(!mact){document.getElementById('f_mact').classList.add('error');document.getElementById('e_mact').textContent='Required';valid=false;}
   if(!valid)return;
-  const btn=document.getElementById('btnSave');
-  btn.disabled=true; btn.textContent='Saving...'; setSync('syncing','Saving...');
-  try {
-    if(editingId) {
-      await jsonpCall({action:'edit', record:{_id:editingId,ZONE:zone,RO:ro,TP_HUB:hub,OFFICE_CODE:code,LOCATION:loc,MACT:mact}});
-      showToast('&#10003; Record updated in Google Sheets','success');
-    } else {
+  const btn=document.getElementById('btnSave');btn.disabled=true;btn.textContent='Saving...';setSync('syncing','Saving...');
+  try{
+    if(editingId){
+      await jsonpCall({action:'edit',record:{_id:editingId,ZONE:zone,RO:ro,TP_HUB:hub,OFFICE_CODE:code,LOCATION:loc,MACT:mact}});
+      showToast('&#10003; Record updated','success');
+    }else{
       const newId='new_'+Date.now();
-      await jsonpCall({action:'add', record:{_id:newId,_isNew:true,SNO:'0',ZONE:zone,RO:ro,TP_HUB:hub,OFFICE_CODE:code,LOCATION:loc,MACT:mact}});
-      showToast('&#10003; New MACT added to Google Sheets','success');
+      await jsonpCall({action:'add',record:{_id:newId,_isNew:true,SNO:'0',ZONE:zone,RO:ro,TP_HUB:hub,OFFICE_CODE:code,LOCATION:loc,MACT:mact}});
+      showToast('&#10003; New MACT added','success');
     }
-    closeModal(); await refreshData();
-  } catch(err) {
-    showToast('Error: '+err.message,'error-t'); setSync('error','Save failed');
-  } finally {
-    btn.disabled=false; btn.textContent='Save Record';
-  }
+    closeModal();await refreshData();
+  }catch(err){showToast('Error: '+err.message,'error-t');setSync('error','Save failed');}
+  finally{btn.disabled=false;btn.textContent='Save Record';}
 }
 
-function askDelete(id) {
-  const r=ALL_DATA.find(x=>x._id===id); if(!r)return;
-  deleteId=id;
-  document.getElementById('confirmMsg').textContent='"'+r.MACT+'" ('+r.LOCATION+') will be permanently removed.';
-  document.getElementById('confirmBox').classList.add('open');
-}
+// ── DELETE ────────────────────────────────────────────────────
+function askDelete(id){const r=ALL_DATA.find(x=>x._id===id);if(!r)return;deleteId=id;document.getElementById('confirmMsg').textContent='"'+r.MACT+'" ('+r.LOCATION+') will be permanently removed.';document.getElementById('confirmBox').classList.add('open');}
 function closeConfirm(){document.getElementById('confirmBox').classList.remove('open');deleteId=null;}
-async function confirmDelete() {
+async function confirmDelete(){
   if(!deleteId)return;
-  const btn=document.getElementById('btnConfirmDel');
-  btn.disabled=true; btn.textContent='Deleting...'; setSync('syncing','Deleting...');
-  try {
-    await jsonpCall({action:'delete', id:deleteId});
-    showToast('Record deleted','error-t'); closeConfirm(); await refreshData();
-  } catch(err) {
-    showToast('Error: '+err.message,'error-t'); setSync('error','Delete failed');
-  } finally {
-    btn.disabled=false; btn.textContent='Yes, Delete';
-  }
+  const btn=document.getElementById('btnConfirmDel');btn.disabled=true;btn.textContent='Deleting...';setSync('syncing','Deleting...');
+  try{await jsonpCall({action:'delete',id:deleteId});showToast('Record deleted','error-t');closeConfirm();await refreshData();}
+  catch(err){showToast('Error: '+err.message,'error-t');setSync('error','Delete failed');}
+  finally{btn.disabled=false;btn.textContent='Yes, Delete';}
 }
 
-function showToast(msg,type) {
-  const t=document.getElementById('toast');
-  t.innerHTML=msg; t.className='toast '+type+' show';
-  setTimeout(()=>{t.className='toast';},3000);
+// ── BULK UPDATE ───────────────────────────────────────────────
+function openBulkModal(){
+  document.getElementById('bulk_find').value='';
+  document.getElementById('bulk_replace').value='';
+  document.getElementById('bulkPreview').style.display='none';
+  document.getElementById('btnBulkApply').disabled=true;
+  document.getElementById('e_bulk_find').textContent='';
+  document.getElementById('bulkOverlay').classList.add('open');
+}
+function closeBulkModal(){document.getElementById('bulkOverlay').classList.remove('open');}
+
+function selectBulkField(btn){
+  document.querySelectorAll('.field-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  bulkField=btn.dataset.field;
+  previewBulk();
 }
 
+function previewBulk(){
+  const findVal=document.getElementById('bulk_find').value.trim();
+  document.getElementById('e_bulk_find').textContent='';
+  if(!findVal){document.getElementById('bulkPreview').style.display='none';document.getElementById('btnBulkApply').disabled=true;return;}
+  const matches=ALL_DATA.filter(r=>String(r[bulkField]).trim()===findVal);
+  const count=matches.length;
+  document.getElementById('prevCount').textContent=count;
+  document.getElementById('prevField').textContent='in field: '+bulkField.replace('_',' ');
+  const samplesEl=document.getElementById('bulkSamples');
+  samplesEl.innerHTML=matches.slice(0,8).map(r=>`<div class="bulk-sample-row">&#8250; <span>${escHtml(r.MACT||'')}</span> &mdash; ${escHtml(r.LOCATION||'')}</div>`).join('');
+  if(matches.length>8)samplesEl.innerHTML+=`<div class="bulk-sample-row" style="color:var(--gold)">...and ${matches.length-8} more</div>`;
+  document.getElementById('bulkPreview').style.display='block';
+  document.getElementById('btnBulkApply').disabled=count===0;
+}
+
+async function applyBulk(){
+  const findVal=document.getElementById('bulk_find').value.trim();
+  const replaceVal=document.getElementById('bulk_replace').value.trim();
+  if(!findVal){document.getElementById('e_bulk_find').textContent='Required';return;}
+  const btn=document.getElementById('btnBulkApply');btn.disabled=true;btn.textContent='Applying...';
+  setSync('syncing','Bulk updating...');
+  try{
+    const res=await jsonpCall({action:'bulkUpdate',params:{field:bulkField,findVal:findVal,replaceVal:replaceVal}},60000);
+    showToast('&#10003; '+res.updated+' records updated successfully','success');
+    closeBulkModal();
+    await refreshData();
+  }catch(err){showToast('Error: '+err.message,'error-t');setSync('error','Bulk update failed');btn.disabled=false;btn.textContent='Apply to All';}
+}
+
+// ── HUB INCHARGE MANAGER ─────────────────────────────────────
+let allHubNames=[], editingHub=null;
+function openHubModal(){
+  // Get all unique hub names from current data
+  allHubNames=[...new Set(ALL_DATA.map(r=>r.TP_HUB).filter(Boolean))].sort();
+  document.getElementById('hubFilterInput').value='';
+  document.getElementById('hubEditForm').style.display='none';
+  editingHub=null;
+  renderHubList();
+  document.getElementById('hubOverlay').classList.add('open');
+}
+function closeHubModal(){document.getElementById('hubOverlay').classList.remove('open');editingHub=null;}
+
+function renderHubList(){
+  const q=document.getElementById('hubFilterInput').value.toLowerCase();
+  const filtered_hubs=allHubNames.filter(h=>h.toLowerCase().includes(q));
+  const el=document.getElementById('hubList');
+  if(!filtered_hubs.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px">No TP Hubs found</div>';return;}
+  el.innerHTML=filtered_hubs.map(hub=>{
+    const info=HUB_DATA[hub]||{};
+    const hasInfo=info.incharge_name||info.contact_no;
+    return `<div class="hub-list-row">
+      <div class="hub-name-cell">${escHtml(hub)}</div>
+      <div class="hub-field" style="${hasInfo?'color:var(--white)':''"}">${escHtml(info.incharge_name||'—')}</div>
+      <div class="hub-field" style="${info.contact_no?'color:var(--white)':''"}">${escHtml(info.contact_no||'—')}</div>
+      <div><button class="btn-hub-edit" onclick="editHubIncharge('${escAttr(hub)}')">&#9998; Edit</button></div>
+    </div>`;
+  }).join('');
+}
+
+function escAttr(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
+
+function editHubIncharge(hubName){
+  editingHub=hubName;
+  const info=HUB_DATA[hubName]||{};
+  document.getElementById('he_hub').value=hubName;
+  document.getElementById('he_incharge').value=info.incharge_name||'';
+  document.getElementById('he_contact').value=info.contact_no||'';
+  document.getElementById('he_email').value=info.email||'';
+  document.getElementById('hubEditTitle').textContent='Edit: '+hubName;
+  document.getElementById('hubEditForm').style.display='block';
+  document.getElementById('hubEditForm').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function cancelHubEdit(){document.getElementById('hubEditForm').style.display='none';editingHub=null;}
+
+async function saveHubIncharge(){
+  if(!editingHub)return;
+  const btn=document.getElementById('btnSaveHub');btn.disabled=true;btn.textContent='Saving...';
+  const hub={hub_name:editingHub,incharge_name:document.getElementById('he_incharge').value.trim(),contact_no:document.getElementById('he_contact').value.trim(),email:document.getElementById('he_email').value.trim()};
+  try{
+    await jsonpCall({action:'saveHub',hub:hub});
+    HUB_DATA[editingHub]=hub;
+    showToast('&#10003; Incharge saved for '+editingHub,'success');
+    cancelHubEdit();renderHubList();applyFilters();
+  }catch(err){showToast('Error: '+err.message,'error-t');}
+  finally{btn.disabled=false;btn.textContent='Save Incharge';}
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+function showToast(msg,type){const t=document.getElementById('toast');t.innerHTML=msg;t.className='toast '+type+' show';setTimeout(()=>{t.className='toast';},3200);}
+
+// ── FILTER & RENDER ───────────────────────────────────────────
 function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function highlight(text,term) {
-  if(!term)return escHtml(text);
-  const re=new RegExp('('+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
-  return escHtml(text).replace(re,'<span class="highlight">$1</span>');
-}
-function applyFilters() {
+function highlight(text,term){if(!term)return escHtml(text);const re=new RegExp('('+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');return escHtml(text).replace(re,'<span class="highlight">$1</span>');}
+
+function applyFilters(){
   const q=document.getElementById('globalSearch').value.trim().toLowerCase();
-  const zone=document.getElementById('zoneFilter').value, ro=document.getElementById('roFilter').value, hub=document.getElementById('hubFilter').value;
+  const zone=document.getElementById('zoneFilter').value,ro=document.getElementById('roFilter').value,hub=document.getElementById('hubFilter').value;
   filtered=ALL_DATA.filter(r=>{
     if(zone&&r.ZONE!==zone)return false;
     if(ro&&r.RO!==ro)return false;
     if(hub&&r.TP_HUB!==hub)return false;
     if(q){
-      // Pure number → exact Office Code match only
-      const isNumeric = /^\d+$/.test(q);
-      if(isNumeric) {
-        return String(r.OFFICE_CODE).trim() === q;
-      }
-      // Text → substring match on MACT, Location, TP Hub, RO
-      const hay=[r.MACT,r.LOCATION,r.TP_HUB,r.RO].join(' ').toLowerCase();
-      return hay.includes(q);
+      if(/^\d+$/.test(q))return String(r.OFFICE_CODE).trim()===q;
+      return [r.MACT,r.LOCATION,r.TP_HUB,r.RO].join(' ').toLowerCase().includes(q);
     }
     return true;
   });
   if(sortKey){filtered.sort((a,b)=>{const av=(a[sortKey]||'').toString().toLowerCase(),bv=(b[sortKey]||'').toString().toLowerCase();return av<bv?-sortDir:av>bv?sortDir:0;});}
   renderTable();
 }
-function renderTable() {
+
+function renderTable(){
   const q=document.getElementById('globalSearch').value.trim();
   const tbody=document.getElementById('tableBody');
-  if(!filtered.length) {
-    tbody.innerHTML='<tr><td colspan="7"><div class="empty-state"><div class="icon">&#9878;&#65039;</div><h3>No Records Found</h3><p>Try adjusting filters</p></div></td></tr>';
+  if(!filtered.length){
+    tbody.innerHTML='<tr><td colspan="8"><div class="empty-state"><div class="icon">&#9878;&#65039;</div><h3>No Records Found</h3><p>Try adjusting filters</p></div></td></tr>';
     document.getElementById('resultCount').textContent='No records found';
     document.getElementById('total-badge').textContent='0 Records';
     document.getElementById('footerCount').textContent='0 results';
     return;
   }
-  tbody.innerHTML=filtered.map(r=>`
-    <tr class="${r._isNew==='true'||r._isNew===true?'new-row':''}">
+  tbody.innerHTML=filtered.map(r=>{
+    const hub=HUB_DATA[r.TP_HUB]||{};
+    const hasInfo=hub.incharge_name||hub.contact_no;
+    const tipHtml=hasInfo?`
+      <div class="hub-tip">
+        <div class="tip-title">TP Hub Incharge</div>
+        ${hub.incharge_name?`<div class="tip-row"><span class="tip-label">&#128100; Name</span><span class="tip-val">${escHtml(hub.incharge_name)}</span></div>`:''}
+        ${hub.contact_no?`<div class="tip-row"><span class="tip-label">&#128222; Contact</span><span class="tip-val">${escHtml(hub.contact_no)}</span></div>`:''}
+        ${hub.email?`<div class="tip-row"><span class="tip-label">&#9993; Email</span><span class="tip-val">${escHtml(hub.email)}</span></div>`:''}
+      </div>`:'<div class="hub-tip"><div class="tip-none">No incharge added yet.<br>Click TP Hub Incharge button to add.</div></div>';
+    return `<tr class="${r._isNew==='true'||r._isNew===true?'new-row':''}">
       <td><span class="zone-badge zone-${r.ZONE}">${r.ZONE}</span></td>
       <td><span class="ro-tag">${highlight(r.RO,q)}</span></td>
-      <td>${highlight(r.TP_HUB,q)}</td>
+      <td class="hub-cell">${highlight(r.TP_HUB,q)}${tipHtml}</td>
       <td><span class="code-cell">${highlight(r.OFFICE_CODE,q)}</span></td>
       <td>${highlight(r.LOCATION,q)}</td>
       <td class="mact-name">${highlight(r.MACT,q)}</td>
+      <td style="font-size:11px;color:${hasInfo?'var(--white)':'var(--muted)'}">${hasInfo?`&#128100; ${escHtml(hub.incharge_name||'')}${hub.contact_no?'<br><span style=\"color:var(--muted)\">&#128222; '+escHtml(hub.contact_no)+'</span>':''}`: '<span style=\"opacity:.4\">—</span>'}</td>
       <td class="actions-cell">
         <button class="btn-edit" onclick="openModal('${r._id}')">&#9998; Edit</button>
         <button class="btn-del" onclick="askDelete('${r._id}')">&#10005; Del</button>
       </td>
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
   const n=filtered.length;
   document.getElementById('resultCount').textContent='Showing '+n.toLocaleString()+' record'+(n!==1?'s':'');
   document.getElementById('total-badge').textContent=ALL_DATA.length.toLocaleString()+' Records';
   document.getElementById('footerCount').textContent=n+' of '+ALL_DATA.length+' records';
 }
-function sortTable(key) {
-  sortDir=sortKey===key?-sortDir:1; sortKey=key;
-  document.querySelectorAll('thead th').forEach(th=>{th.classList.remove('sorted');const a=th.querySelector('.sort-arrow');if(a)a.innerHTML='&#8597;';});
+
+function sortTable(key){
+  sortDir=sortKey===key?-sortDir:1;sortKey=key;
+  document.querySelectorAll('thead th').forEach(th=>{th.classList.remove('sorted');const a=th.querySelector('.sa');if(a)a.innerHTML='&#8597;';});
   const th=document.getElementById('th-'+key);
-  if(th){th.classList.add('sorted');th.querySelector('.sort-arrow').innerHTML=sortDir===1?'&#8593;':'&#8595;';}
+  if(th){th.classList.add('sorted');th.querySelector('.sa').innerHTML=sortDir===1?'&#8593;':'&#8595;';}
   applyFilters();
 }
-function clearAll() {
+function clearAll(){
   document.getElementById('globalSearch').value='';
   document.getElementById('zoneFilter').value='';
   document.getElementById('roFilter').value='';
   document.getElementById('hubFilter').value='';
-  sortKey=''; sortDir=1;
-  document.querySelectorAll('thead th').forEach(th=>{th.classList.remove('sorted');const a=th.querySelector('.sort-arrow');if(a)a.innerHTML='&#8597;';});
-  rebuildRODropdown(); rebuildHubDropdown(); applyFilters();
+  sortKey='';sortDir=1;
+  document.querySelectorAll('thead th').forEach(th=>{th.classList.remove('sorted');const a=th.querySelector('.sa');if(a)a.innerHTML='&#8597;';});
+  rebuildRODropdown();rebuildHubDropdown();applyFilters();
 }
+
 document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+document.getElementById('bulkOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeBulkModal();});
+document.getElementById('hubOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeHubModal();});
 document.getElementById('globalSearch').addEventListener('input',applyFilters);
 document.getElementById('zoneFilter').addEventListener('change',()=>{rebuildRODropdown();rebuildHubDropdown();applyFilters();});
 document.getElementById('roFilter').addEventListener('change',()=>{rebuildHubDropdown();applyFilters();});
