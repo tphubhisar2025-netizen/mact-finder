@@ -377,7 +377,7 @@ function jsonpCall(params, timeout=20000) {
     const cb='cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
     const qs=Object.entries(params).map(([k,v])=>k+'='+encodeURIComponent(typeof v==='object'?JSON.stringify(v):String(v))).join('&');
     const url=SCRIPT_URL+'?'+qs+'&callback='+cb+'&t='+Date.now();
-    const timer=setTimeout(()=>{delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);reject(new Error('Timeout'));'},timeout);
+    const timer=setTimeout(()=>{delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);reject(new Error('Timeout'));},timeout);
     window[cb]=d=>{clearTimeout(timer);delete window[cb];if(s.parentNode)s.parentNode.removeChild(s);d&&d.success===false?reject(new Error(d.error||'Error')):resolve(d);};
     const s=document.createElement('script');
     s.src=url;
@@ -491,7 +491,7 @@ function closeModal(){
   document.getElementById('f_hub').style.display='block';document.getElementById('f_hub_text').style.display='none';
   clearFormErrors();
 }
-function clearFormErrors(){['zone','ro','hub','code','loc','mact'].forEach(f=>{document.getElementById('f_'+f).classList&&document.getElementById('f_'+f).classList.remove('error');const e=document.getElementById('e_'+f);if(e)e.textContent='';'});}
+function clearFormErrors(){['zone','ro','hub','code','loc','mact'].forEach(f=>{document.getElementById('f_'+f).classList&&document.getElementById('f_'+f).classList.remove('error');const e=document.getElementById('e_'+f);if(e)e.textContent='';});}
 
 async function saveRecord(){
   clearFormErrors();
@@ -607,8 +607,8 @@ function renderHubList(){
     const hasInfo=info.incharge_name||info.contact_no;
     return `<div class="hub-list-row">
       <div class="hub-name-cell">${escHtml(hub)}</div>
-      <div class="hub-field" style="${hasInfo?'color:var(--white)':''"}">${escHtml(info.incharge_name||'—')}</div>
-      <div class="hub-field" style="${info.contact_no?'color:var(--white)':''"}">${escHtml(info.contact_no||'—')}</div>
+      <div class="hub-field" style="${hasInfo?'color:var(--white)':''}">${escHtml(info.incharge_name||'—')}</div>
+      <div class="hub-field" style="${info.contact_no?'color:var(--white)':''}">${escHtml(info.contact_no||'—')}</div>
       <div><button class="btn-hub-edit" onclick="editHubIncharge('${escAttr(hub)}')">&#9998; Edit</button></div>
     </div>`;
   }).join('');
