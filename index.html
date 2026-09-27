@@ -207,7 +207,7 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text">LOADING MACT DATA</div>
-  <div class="loading-sub" id="loadingMsg">Connecting to Google Sheets...</div>
+  <div class="loading-sub" id="loadingMsg">Connecting to Database...</div>
 </div>
 
 <!-- HEADER -->
@@ -265,7 +265,7 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
 </div>
 
 <div class="footer">
-  <div class="storage-info"><span class="storage-dot"></span><span>Live data — Google Sheets Backend</span></div>
+  <div class="storage-info"><span class="storage-dot"></span><span>Live data — Database Backend</span></div>
   <span id="footerCount"></span>
 </div>
 
@@ -454,7 +454,7 @@ async function init(){
     // Build hub lookup
     (hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     cacheSave(ALL_DATA,hubRes.data||[]);
-    setSync('live','Live • Google Sheets');
+    setSync('live','Live • Database');
     document.getElementById('loadingOverlay').classList.add('hidden');
     rebuildRODropdown();rebuildHubDropdown();applyFilters();
   }catch(err){
@@ -462,10 +462,10 @@ async function init(){
     if(cached && cached.mact && cached.mact.length){
       ALL_DATA=cached.mact;
       (cached.hub||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
-      document.getElementById('loadingMsg').innerHTML='Could not reach Google Sheets ('+escHtml(err.message)+').<br>Showing the last data synced on this device. Tap the sync status (top right) to retry.';
+      document.getElementById('loadingMsg').innerHTML='Could not reach the Database ('+escHtml(err.message)+').<br>Showing the last data synced on this device. Tap the sync status (top right) to retry.';
     }else{
       ALL_DATA=[...BASE_DATA];
-      document.getElementById('loadingMsg').innerHTML='Could not reach Google Sheets ('+escHtml(err.message)+').<br>Showing the built-in starter data. Tap the sync status (top right) to retry.';
+      document.getElementById('loadingMsg').innerHTML='Could not reach the Database ('+escHtml(err.message)+').<br>Showing the built-in starter data. Tap the sync status (top right) to retry.';
     }
     setSync('error','Offline — tap to retry');
     setTimeout(()=>document.getElementById('loadingOverlay').classList.add('hidden'),4000);
@@ -481,9 +481,9 @@ async function refreshData(){
     ALL_DATA=(mactRes.data||[]).filter(r=>r._deleted!=='true');
     HUB_DATA={};(hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     cacheSave(ALL_DATA,hubRes.data||[]);
-    setSync('live','Live • Google Sheets');
+    setSync('live','Live • Database');
     rebuildRODropdown();rebuildHubDropdown();applyFilters();
-    showToast('Synced with Google Sheets','success');
+    showToast('Synced with Database','success');
   }catch(err){
     setSync('error','Sync failed — tap to retry');
     showToast('Sync failed: '+err.message,'error-t');
