@@ -207,7 +207,7 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
   <div class="loading-text">LOADING MACT DATA</div>
-  <div class="loading-sub" id="loadingMsg">Connecting to Database...</div>
+  <div class="loading-sub" id="loadingMsg">Connecting to Google Sheets...</div>
 </div>
 
 <!-- HEADER -->
@@ -344,7 +344,7 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
     <h2>&#128100; TP Hub Incharge Manager</h2>
     <input type="text" class="hub-filter-input" id="hubFilterInput" placeholder="&#128269; Filter TP Hubs..." oninput="renderHubList()">
     <div class="hub-list-row header">
-      <div>TP Hub / DO</div><div>Incharge</div><div>Contact No.</div><div></div>
+      <div class="hub-sort-th" onclick="sortHubList('hub')" style="cursor:pointer">TP Hub / DO <span class="sa" id="hubSortArrow-hub">&#8597;</span></div><div class="hub-sort-th" onclick="sortHubList('incharge')" style="cursor:pointer">Incharge <span class="sa" id="hubSortArrow-incharge">&#8597;</span></div><div class="hub-sort-th" onclick="sortHubList('contact')" style="cursor:pointer">Contact No. <span class="sa" id="hubSortArrow-contact">&#8597;</span></div><div></div>
     </div>
     <div class="hub-list" id="hubList">
       <div style="text-align:center;padding:20px;color:var(--muted)">Loading hub data...</div>
@@ -394,6 +394,17 @@ const ZONE_HUB_MAP = {"WEST": ["D.O. Alibaug", "D.O. Margao", "D.O. Panjim", "DO
 const RO_HUB_MAP   = {"AHME": ["TP Hub Ahmedabad", "TP Hub Mehsana", "TP Hub Rajkot"], "BANG": ["DO MANGALORE", "DO,KOLAR", "TP HUB, BENGALURU", "TP HUB,MYSORE", "TP HUB,TUMKUR"], "BHOP": ["TP HUB BHOPAL", "TP HUB GWALIOR", "TP HUB INDORE", "TP HUB JABALPUR", "TP HUB SATNA", "TP HUB, BHOPAL"], "BHUB": ["DO BALASORE", "DO BERHAMPUR", "DO SAMBALPUR", "TP HUB CUTTACK"], "CHAN": ["TP HUB HISAR", "TP HUB JAMMU", "TP HUB SHIMLA", "TP HUB SRINAGAR", "TP Hub, Chandigarh"], "CHEN": ["Motor TP Claims\n Hub, Chennai", "Motor TP Claims\n Hub, Tiruvallur", "TP HUB CHENNAI"], "COIM": ["TP HUB ERODE", "TP HUB Hosur", "TP HUB SALEM", "TP Hub, Coimbatore", "TP Hub, Erode", "TP Hub, Hosur", "TP Hub, Salem", "TP Hub, Tirupur"], "DEHR": ["TP HUB DEHRADUN", "TP HUB MEERUT"], "DRO-1": ["DRO - 1, DELHI"], "DRO-2": ["TP HUB DRO-2"], "GUWA": ["BO AIZAWL", "BO DIMAPUR", "BO IMPHAL", "DO AGARTALA", "DO JORHAT", "DO TINSUKIA", "SHILLONG DO", "SILCHAR D.O.", "TP HUB\n GUWAHATI", "TP HUB BONGAIGAON", "TP HUB GUWAHATI", "Tezpur DO"], "HUBL": ["TP HUB BELGAUM", "TP HUB GULBARGA", "TP HUB HUBLI", "TP HUB SHIMOGA", "TP HUB, HUBLI", "TP HUB, SHIMOGA"], "HYDE": ["TP HUB\n HYDERABAD", "TP HUB HYDERABAD", "TP Hub Kadapa", "TP Hub, Karimnagar"], "JAIP": ["DO 2 KOTA", "DO KOTA", "TP HUB ALWAR", "TP HUB JAIPUR"], "JODH": ["TP HUB JODHPUR", "TP HUB SRIGANGANAGAR", "TP HUB UDAIPUR"], "KOCH": ["DO\n MUVATTUPUZHA", "DO ALAPPUZHA", "DO KOTTAYAM", "DO PATHANAMTHITTA", "TP HUB\n ERNAKULAM", "TP HUB TRIVANDRUM"], "KOLK": ["TP HUB Durgapur", "TP HUB Kolkata", "TP HUB Siliguri"], "KOZH": ["TP HUB KOZHIKODE", "TP HUB THRISSUR"], "LUCK": ["DO AGRA", "DO ALIGARH", "DO ALLAHABAD", "DO BAREILLY", "DO FAIZABAD", "DO GORAKHPUR", "DO MATHURA", "DO SHAHJANPUR", "DO-1,VARANASI", "DO-II,VARANASI", "TP HUB KANPUR", "TP HUB LUCKNOW"], "LUDH": ["TP HUB LUDHIANA", "TP HUB PATIALA"], "MADU": ["DO DINDIGUL", "TP HUB - TIRUNELVELI", "TP HUB MADURAI", "TP HUB NAGERCOIL", "TP HUB THANJAVUR", "TP HUB- TRICHY"], "MRO-2": ["D.O. Alibaug", "D.O. Margao", "D.O. Panjim", "T. P. Hub M.R.O. II"], "NAGP": ["DO, AKOLA", "TP HUB NANDED", "TP Hub\n AURANGABAD", "TP Hub NAGPUR"], "PATN": ["TP HUB BHAGALPUR", "TP HUB PATNA", "TP HUB RANCHI"], "PUDU": ["TP\n HUB,PUDUCHERR Y", "TP HUB,PUDUCHERR\n Y", "TP HUB,PUDUCHERRY\n ", "TP HUB,VELLORE"], "PUNE": ["NASHIK TP HUB ", "TP HUB KOLHAPUR", "TP HUB KOLHAPUR ", "TP HUB PUNE", "TP HUB SOLAPUR"], "RAIP": ["TP CELL ,RAIPUR", "TP CELL RAIPUR", "TP HUB BILASPUR"], "VADO": ["TP Hub Godhra", "TP Hub Vadodara"], "VISA": ["TP HUB NELLORE", "TP HUB VIJAYAWADA", "TP HUB VISAKHAPATNAM"]};
 
 let ALL_DATA=[], filtered=[], HUB_DATA={}, sortKey='', sortDir=1;
+
+// Collapses stray line-breaks/double-spaces that sometimes creep into
+// spreadsheet cells (e.g. "TP HUB\nGUWAHATI" vs "TP HUB GUWAHATI") so the
+// same hub/office is never treated as two different values in dropdowns,
+// filters, or the TP Hub Incharge list.
+function normalizeRecord(r){
+  const out={};
+  for(const k in r){ out[k] = (typeof r[k]==='string') ? r[k].replace(/\s+/g,' ').trim() : r[k]; }
+  return out;
+}
+function normalizeRecords(arr){ return (arr||[]).map(normalizeRecord); }
 let editingId=null, deleteId=null, bulkField='TP_HUB';
 
 // ── JSONP ──────────────────────────────────────────────────────
@@ -447,12 +458,12 @@ async function init(){
         await jsonpCall({action:'add',record:BASE_DATA[i]});
       }
       const r2=await jsonpCall({action:'fetch'});
-      ALL_DATA=(r2.data||[]).filter(r=>r._deleted!=='true');
+      ALL_DATA=normalizeRecords((r2.data||[]).filter(r=>r._deleted!=='true'));
     }else{
-      ALL_DATA=mactRes.data.filter(r=>r._deleted!=='true');
+      ALL_DATA=normalizeRecords(mactRes.data.filter(r=>r._deleted!=='true'));
     }
     // Build hub lookup
-    (hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
+    normalizeRecords(hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     cacheSave(ALL_DATA,hubRes.data||[]);
     setSync('live','Live • Database');
     document.getElementById('loadingOverlay').classList.add('hidden');
@@ -460,12 +471,12 @@ async function init(){
   }catch(err){
     const cached=cacheLoad();
     if(cached && cached.mact && cached.mact.length){
-      ALL_DATA=cached.mact;
-      (cached.hub||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
-      document.getElementById('loadingMsg').innerHTML='Could not reach the Database ('+escHtml(err.message)+').<br>Showing the last data synced on this device. Tap the sync status (top right) to retry.';
+      ALL_DATA=normalizeRecords(cached.mact);
+      normalizeRecords(cached.hub||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
+      document.getElementById('loadingMsg').innerHTML='Could not reach Google Sheets ('+escHtml(err.message)+').<br>Showing the last data synced on this device. Tap the sync status (top right) to retry.';
     }else{
-      ALL_DATA=[...BASE_DATA];
-      document.getElementById('loadingMsg').innerHTML='Could not reach the Database ('+escHtml(err.message)+').<br>Showing the built-in starter data. Tap the sync status (top right) to retry.';
+      ALL_DATA=normalizeRecords(BASE_DATA);
+      document.getElementById('loadingMsg').innerHTML='Could not reach Google Sheets ('+escHtml(err.message)+').<br>Showing the built-in starter data. Tap the sync status (top right) to retry.';
     }
     setSync('error','Offline — tap to retry');
     setTimeout(()=>document.getElementById('loadingOverlay').classList.add('hidden'),4000);
@@ -478,12 +489,12 @@ async function refreshData(){
   setSync('syncing','Syncing...');
   try{
     const [mactRes,hubRes]=await Promise.all([jsonpCallRetry({action:'fetch'}),jsonpCallRetry({action:'fetchHubs'})]);
-    ALL_DATA=(mactRes.data||[]).filter(r=>r._deleted!=='true');
-    HUB_DATA={};(hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
+    ALL_DATA=normalizeRecords((mactRes.data||[]).filter(r=>r._deleted!=='true'));
+    HUB_DATA={};normalizeRecords(hubRes.data||[]).forEach(h=>{HUB_DATA[h.hub_name]=h;});
     cacheSave(ALL_DATA,hubRes.data||[]);
     setSync('live','Live • Database');
     rebuildRODropdown();rebuildHubDropdown();applyFilters();
-    showToast('Synced with Database','success');
+    showToast('Synced with Google Sheets','success');
   }catch(err){
     setSync('error','Sync failed — tap to retry');
     showToast('Sync failed: '+err.message,'error-t');
@@ -652,7 +663,7 @@ async function applyBulk(){
 }
 
 // ── HUB INCHARGE MANAGER ─────────────────────────────────────
-let allHubNames=[], editingHub=null;
+let allHubNames=[], editingHub=null, hubSortKey='hub', hubSortDir=1;
 function openHubModal(){
   // Get all unique hub names from current data
   allHubNames=[...new Set(ALL_DATA.map(r=>r.TP_HUB).filter(Boolean))].sort();
@@ -666,7 +677,18 @@ function closeHubModal(){document.getElementById('hubOverlay').classList.remove(
 
 function renderHubList(){
   const q=document.getElementById('hubFilterInput').value.toLowerCase();
-  const filtered_hubs=allHubNames.filter(h=>h.toLowerCase().includes(q));
+  let filtered_hubs=allHubNames.filter(h=>h.toLowerCase().includes(q));
+  filtered_hubs=filtered_hubs.slice().sort((a,b)=>{
+    let va,vb;
+    if(hubSortKey==='hub'){ va=a.toLowerCase(); vb=b.toLowerCase(); }
+    else if(hubSortKey==='incharge'){ va=(HUB_DATA[a]?.incharge_name||'').toLowerCase(); vb=(HUB_DATA[b]?.incharge_name||'').toLowerCase(); }
+    else{ va=(HUB_DATA[a]?.contact_no||'').toLowerCase(); vb=(HUB_DATA[b]?.contact_no||'').toLowerCase(); }
+    if(va<vb)return -1*hubSortDir; if(va>vb)return 1*hubSortDir; return 0;
+  });
+  ['hub','incharge','contact'].forEach(k=>{
+    const el=document.getElementById('hubSortArrow-'+k);
+    if(el)el.innerHTML = (k===hubSortKey) ? (hubSortDir===1?'&#8593;':'&#8595;') : '&#8597;';
+  });
   const el=document.getElementById('hubList');
   if(!filtered_hubs.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:12px">No TP Hubs found</div>';return;}
   el.innerHTML=filtered_hubs.map(hub=>{
@@ -679,6 +701,10 @@ function renderHubList(){
       <div><button class="btn-hub-edit" onclick="editHubIncharge('${escAttr(hub)}')">&#9998; Edit</button></div>
     </div>`;
   }).join('');
+}
+function sortHubList(key){
+  if(hubSortKey===key){ hubSortDir*=-1; } else { hubSortKey=key; hubSortDir=1; }
+  renderHubList();
 }
 
 function escAttr(s){return String(s).replace(/"/g,'&quot;').replace(/'/g,'&#39;');}
@@ -699,7 +725,7 @@ function cancelHubEdit(){document.getElementById('hubEditForm').style.display='n
 async function saveHubIncharge(){
   if(!editingHub)return;
   const btn=document.getElementById('btnSaveHub');btn.disabled=true;btn.textContent='Saving...';
-  const hub={hub_name:editingHub,incharge_name:document.getElementById('he_incharge').value.trim(),contact_no:document.getElementById('he_contact').value.trim(),email:document.getElementById('he_email').value.trim()};
+  const hub={hub_name:editingHub.replace(/\s+/g,' ').trim(),incharge_name:document.getElementById('he_incharge').value.trim(),contact_no:document.getElementById('he_contact').value.trim(),email:document.getElementById('he_email').value.trim()};
   try{
     await jsonpCall({action:'saveHub',hub:hub});
     HUB_DATA[editingHub]=hub;
