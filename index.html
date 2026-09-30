@@ -58,6 +58,8 @@ tbody tr:nth-child(even){background:var(--row-even)}
 tbody tr:hover{background:var(--row-hover)}
 tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
 .zone-badge{display:inline-block;padding:2px 8px;border-radius:3px;font-family:'Rajdhani',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.selection-bar{display:flex;align-items:center;gap:12px;padding:8px 20px;background:rgba(201,168,76,.1);border-bottom:1px solid rgba(201,168,76,.3);font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--gold);letter-spacing:1px}
+.chk-col{width:34px;text-align:center}
 .zone-NORTH{background:rgba(41,128,185,.2);color:#5dade2;border:1px solid rgba(41,128,185,.4)}
 .zone-SOUTH{background:rgba(39,174,96,.2);color:#58d68d;border:1px solid rgba(39,174,96,.4)}
 .zone-EAST{background:rgba(243,156,18,.2);color:#f5b942;border:1px solid rgba(243,156,18,.4)}
@@ -245,11 +247,19 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
   <button class="btn-clear" onclick="clearAll()">&#10005; Clear</button>
 </div>
 
+<!-- BULK SELECTION BAR -->
+<div class="selection-bar" id="selectionBar" style="display:none">
+  <span id="selectionCount">0 selected</span>
+  <button class="hbtn hbtn-blue" style="padding:6px 14px;font-size:12px" onclick="openReassignModal()">&#128257; Reassign TP Hub</button>
+  <button class="btn-clear" style="padding:6px 14px;font-size:12px" onclick="clearSelection()">Clear Selection</button>
+</div>
+
 <!-- TABLE -->
 <div class="table-wrapper">
   <table>
     <thead>
       <tr>
+        <th class="no-sort chk-col"><input type="checkbox" id="selectAllChk" onchange="toggleSelectAllVisible(this.checked)"></th>
         <th onclick="sortTable('ZONE')" id="th-ZONE">Zone <span class="sa">&#8597;</span></th>
         <th onclick="sortTable('RO')" id="th-RO">RO <span class="sa">&#8597;</span></th>
         <th onclick="sortTable('TP_HUB')" id="th-TP_HUB">TP Hub / DO <span class="sa">&#8597;</span></th>
@@ -334,6 +344,25 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeBulkModal()">Cancel</button>
       <button class="btn-save" id="btnBulkApply" onclick="applyBulk()" style="background:var(--blue)" disabled>Apply to All</button>
+    </div>
+  </div>
+</div>
+
+<!-- REASSIGN TP HUB MODAL (for checkbox-selected rows) -->
+<div class="modal-overlay" id="reassignOverlay">
+  <div class="modal" style="width:520px">
+    <h2>&#128257; Reassign TP Hub</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Updating TP Hub for <b style="color:var(--gold)" id="reassignCount">0</b> selected record(s). Filter with Zone/RO above, tick the rows you want, then apply the correct hub here.</p>
+    <div class="form-grid">
+      <div class="form-group full"><label>Pick an existing TP Hub</label>
+        <select id="reassign_hub"><option value="">-- Select correct TP Hub --</option></select></div>
+      <div class="form-group full"><label>...or type a new/corrected TP Hub name</label>
+        <input type="text" id="reassign_hub_custom" placeholder="Overrides the dropdown if filled in">
+        <span class="err-msg" id="e_reassign"></span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeReassignModal()">Cancel</button>
+      <button class="btn-save" id="btnReassignApply" onclick="applyReassign()" style="background:var(--blue)">Apply to Selected</button>
     </div>
   </div>
 </div>
@@ -763,7 +792,7 @@ function renderTable(){
   const q=document.getElementById('globalSearch').value.trim();
   const tbody=document.getElementById('tableBody');
   if(!filtered.length){
-    tbody.innerHTML='<tr><td colspan="8"><div class="empty-state"><div class="icon">&#9878;&#65039;</div><h3>No Records Found</h3><p>Try adjusting filters</p></div></td></tr>';
+    tbody.innerHTML='<tr><td colspan="9"><div class="empty-state"><div class="icon">&#9878;&#65039;</div><h3>No Records Found</h3><p>Try adjusting filters</p></div></td></tr>';
     document.getElementById('resultCount').textContent='No records found';
     document.getElementById('total-badge').textContent='0 Records';
     document.getElementById('footerCount').textContent='0 results';
@@ -780,6 +809,7 @@ function renderTable(){
         ${hub.email?`<div class="tip-row"><span class="tip-label">&#9993; Email</span><span class="tip-val">${escHtml(hub.email)}</span></div>`:''}
       </div>`:'<div class="hub-tip"><div class="tip-none">No incharge added yet.<br>Click TP Hub Incharge button to add.</div></div>';
     return `<tr class="${r._isNew==='true'||r._isNew===true?'new-row':''}">
+      <td class="chk-col"><input type="checkbox" class="row-chk" ${SELECTED_IDS.has(r._id)?'checked':''} onchange="toggleRowChk('${r._id}', this.checked)"></td>
       <td><span class="zone-badge zone-${r.ZONE}">${r.ZONE}</span></td>
       <td><span class="ro-tag">${highlight(r.RO,q)}</span></td>
       <td class="hub-cell">${highlight(r.TP_HUB,q)}${tipHtml}</td>
@@ -797,6 +827,9 @@ function renderTable(){
   document.getElementById('resultCount').textContent='Showing '+n.toLocaleString()+' record'+(n!==1?'s':'');
   document.getElementById('total-badge').textContent=ALL_DATA.length.toLocaleString()+' Records';
   document.getElementById('footerCount').textContent=n+' of '+ALL_DATA.length+' records';
+  const allChk=document.getElementById('selectAllChk');
+  allChk.checked = n>0 && filtered.every(r=>SELECTED_IDS.has(r._id));
+  updateSelectionUI();
 }
 
 function sortTable(key){
@@ -816,8 +849,73 @@ function clearAll(){
   rebuildRODropdown();rebuildHubDropdown();applyFilters();
 }
 
+// ── ROW SELECTION / BULK REASSIGN ───────────────────────────────
+let SELECTED_IDS=new Set();
+function toggleRowChk(id,checked){
+  if(checked)SELECTED_IDS.add(id);else SELECTED_IDS.delete(id);
+  const allChk=document.getElementById('selectAllChk');
+  allChk.checked = filtered.length>0 && filtered.every(r=>SELECTED_IDS.has(r._id));
+  updateSelectionUI();
+}
+function toggleSelectAllVisible(checked){
+  filtered.forEach(r=>{ if(checked)SELECTED_IDS.add(r._id); else SELECTED_IDS.delete(r._id); });
+  document.querySelectorAll('.row-chk').forEach(cb=>{cb.checked=checked;});
+  updateSelectionUI();
+}
+function clearSelection(){
+  SELECTED_IDS.clear();
+  document.getElementById('selectAllChk').checked=false;
+  document.querySelectorAll('.row-chk').forEach(cb=>{cb.checked=false;});
+  updateSelectionUI();
+}
+function updateSelectionUI(){
+  const bar=document.getElementById('selectionBar');
+  if(SELECTED_IDS.size>0){
+    bar.style.display='flex';
+    document.getElementById('selectionCount').textContent=SELECTED_IDS.size+' selected';
+  }else{
+    bar.style.display='none';
+  }
+}
+
+// ── BULK REASSIGN TP HUB (for checked rows only) ────────────────
+function openReassignModal(){
+  if(!SELECTED_IDS.size)return;
+  document.getElementById('reassignCount').textContent=SELECTED_IDS.size;
+  const sel=document.getElementById('reassign_hub');
+  const hubs=[...new Set(ALL_DATA.map(r=>r.TP_HUB).filter(Boolean))].sort();
+  sel.innerHTML='<option value="">-- Select correct TP Hub --</option>'+hubs.map(h=>`<option value="${escAttr(h)}">${escHtml(h)}</option>`).join('');
+  document.getElementById('reassign_hub_custom').value='';
+  document.getElementById('e_reassign').textContent='';
+  document.getElementById('reassignOverlay').classList.add('open');
+}
+function closeReassignModal(){document.getElementById('reassignOverlay').classList.remove('open');}
+
+async function applyReassign(){
+  const picked=document.getElementById('reassign_hub').value.trim();
+  const custom=document.getElementById('reassign_hub_custom').value.trim();
+  const newHub=(custom||picked).replace(/\s+/g,' ').trim();
+  if(!newHub){document.getElementById('e_reassign').textContent='Pick or type a TP Hub';return;}
+  const ids=[...SELECTED_IDS];
+  const btn=document.getElementById('btnReassignApply');btn.disabled=true;btn.textContent='Applying...';
+  setSync('syncing','Reassigning...');
+  try{
+    const res=await jsonpCall({action:'bulkEditByIds',params:{ids:ids,fields:{TP_HUB:newHub}}},60000);
+    showToast('&#10003; '+(res.updated!==undefined?res.updated:ids.length)+' records reassigned to '+newHub,'success');
+    closeReassignModal();
+    clearSelection();
+    await refreshData();
+  }catch(err){
+    showToast('Error: '+err.message+' — is the Apps Script updated with the bulkEditByIds action?','error-t');
+    setSync('error','Reassign failed');
+  }
+  finally{btn.disabled=false;btn.textContent='Apply to Selected';}
+}
+
+
 document.getElementById('modalOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
 document.getElementById('bulkOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeBulkModal();});
+document.getElementById('reassignOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeReassignModal();});
 document.getElementById('hubOverlay').addEventListener('click',e=>{if(e.target===e.currentTarget)closeHubModal();});
 document.getElementById('globalSearch').addEventListener('input',applyFilters);
 document.getElementById('zoneFilter').addEventListener('change',()=>{rebuildRODropdown();rebuildHubDropdown();applyFilters();});
