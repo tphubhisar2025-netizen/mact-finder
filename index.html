@@ -355,9 +355,11 @@ tbody td{padding:10px 14px;color:var(--white);vertical-align:middle}
     <p style="color:var(--muted);font-size:13px;margin-bottom:14px">Updating TP Hub for <b style="color:var(--gold)" id="reassignCount">0</b> selected record(s). Filter with Zone/RO above, tick the rows you want, then apply the correct hub here.</p>
     <div class="form-grid">
       <div class="form-group full"><label>Pick an existing TP Hub</label>
-        <select id="reassign_hub"><option value="">-- Select correct TP Hub --</option></select></div>
+        <select id="reassign_hub" onchange="onReassignHubPick()"><option value="">-- Select correct TP Hub --</option></select></div>
       <div class="form-group full"><label>...or type a new/corrected TP Hub name</label>
-        <input type="text" id="reassign_hub_custom" placeholder="Overrides the dropdown if filled in">
+        <input type="text" id="reassign_hub_custom" placeholder="Overrides the dropdown if filled in" oninput="onReassignHubPick()"></div>
+      <div class="form-group full"><label>Office Code for this hub</label>
+        <input type="text" id="reassign_office_code" placeholder="Auto-fills when you pick an existing hub — required either way">
         <span class="err-msg" id="e_reassign"></span></div>
     </div>
     <div class="modal-actions">
@@ -878,30 +880,46 @@ function updateSelectionUI(){
   }
 }
 
-// ── BULK REASSIGN TP HUB (for checked rows only) ────────────────
+// ── BULK REASSIGN TP HUB (+ its Office Code) for checked rows only ──
+let HUB_OFFICE_CODE_MAP={};
 function openReassignModal(){
   if(!SELECTED_IDS.size)return;
   document.getElementById('reassignCount').textContent=SELECTED_IDS.size;
   const sel=document.getElementById('reassign_hub');
   const hubs=[...new Set(ALL_DATA.map(r=>r.TP_HUB).filter(Boolean))].sort();
   sel.innerHTML='<option value="">-- Select correct TP Hub --</option>'+hubs.map(h=>`<option value="${escAttr(h)}">${escHtml(h)}</option>`).join('');
+  // Map each hub name to the Office Code it's already used with elsewhere in the data
+  HUB_OFFICE_CODE_MAP={};
+  ALL_DATA.forEach(r=>{ if(r.TP_HUB && r.OFFICE_CODE && !HUB_OFFICE_CODE_MAP[r.TP_HUB]) HUB_OFFICE_CODE_MAP[r.TP_HUB]=r.OFFICE_CODE; });
   document.getElementById('reassign_hub_custom').value='';
+  document.getElementById('reassign_office_code').value='';
   document.getElementById('e_reassign').textContent='';
   document.getElementById('reassignOverlay').classList.add('open');
 }
 function closeReassignModal(){document.getElementById('reassignOverlay').classList.remove('open');}
+function onReassignHubPick(){
+  const picked=document.getElementById('reassign_hub').value.trim();
+  const custom=document.getElementById('reassign_hub_custom').value.trim();
+  const hub=(custom||picked).replace(/\s+/g,' ').trim();
+  const codeField=document.getElementById('reassign_office_code');
+  if(hub && HUB_OFFICE_CODE_MAP[hub]){ codeField.value=HUB_OFFICE_CODE_MAP[hub]; }
+  else if(picked && !custom){ codeField.value=''; } // known hub but no code on record anywhere — leave for manual entry
+}
 
 async function applyReassign(){
   const picked=document.getElementById('reassign_hub').value.trim();
   const custom=document.getElementById('reassign_hub_custom').value.trim();
   const newHub=(custom||picked).replace(/\s+/g,' ').trim();
+  const newCode=document.getElementById('reassign_office_code').value.trim();
   if(!newHub){document.getElementById('e_reassign').textContent='Pick or type a TP Hub';return;}
+  if(!newCode){document.getElementById('e_reassign').textContent='Office Code is required — it moves together with the TP Hub';return;}
+  document.getElementById('e_reassign').textContent='';
   const ids=[...SELECTED_IDS];
   const btn=document.getElementById('btnReassignApply');btn.disabled=true;btn.textContent='Applying...';
   setSync('syncing','Reassigning...');
   try{
-    const res=await jsonpCall({action:'bulkEditByIds',params:{ids:ids,fields:{TP_HUB:newHub}}},60000);
-    showToast('&#10003; '+(res.updated!==undefined?res.updated:ids.length)+' records reassigned to '+newHub,'success');
+    const res=await jsonpCall({action:'bulkEditByIds',params:{ids:ids,fields:{TP_HUB:newHub,OFFICE_CODE:newCode}}},60000);
+    showToast('&#10003; '+(res.updated!==undefined?res.updated:ids.length)+' records reassigned to '+newHub+' ('+newCode+')','success');
     closeReassignModal();
     clearSelection();
     await refreshData();
